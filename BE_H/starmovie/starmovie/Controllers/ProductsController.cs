@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using starmovie.Models;
 using starmovie.Repositories;
@@ -34,6 +35,7 @@ namespace starmovie.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddNewBook(BookModel model)
         {
             try
@@ -48,6 +50,7 @@ namespace starmovie.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> UpadteBook(int id, BookModel bookModel)
         {
             if(id != bookModel.Id)
@@ -59,6 +62,7 @@ namespace starmovie.Controllers
         }
 
         [HttpDelete]
+        [Authorize]
         public async Task<IActionResult> DeleteBook(int id)
         {
             try

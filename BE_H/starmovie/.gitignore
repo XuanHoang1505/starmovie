@@ -1,0 +1,30 @@
+# Bỏ thư mục bin và obj (không cần thiết)
+bin/
+obj/
+
+# Bỏ file build
+*.dll
+*.exe
+*.pdb
+*.log
+*.cache
+
+# Bỏ file user-specific của Visual Studio
+.vscode/
+.vs/
+*.suo
+*.user
+*.csproj.user
+
+# Bỏ file lock của .NET
+project.lock.json
+project.assets.json
+
+# Bỏ file môi trường
+.env
+appsettings.Development.json
+
+# Bỏ các thư mục tạm
+node_modules/
+logs/
+temp/
