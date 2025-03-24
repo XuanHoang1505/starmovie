@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using starmovie.Data;
+using starmovie.Data.Domain;
 using starmovie.Models;
 
 namespace starmovie.Repositories
@@ -27,7 +28,7 @@ namespace starmovie.Repositories
 
         public async Task DeleteBookAsync(int id)
         {
-           var deleteBook = await _movieContext.Books.FirstOrDefaultAsync(b => b.Id == id );
+            var deleteBook = await _movieContext.Books.FirstOrDefaultAsync(b => b.Id == id);
             if (deleteBook != null)
             {
                 _movieContext.Books.Remove(deleteBook);
@@ -37,7 +38,7 @@ namespace starmovie.Repositories
 
         public async Task<List<BookModel>> GetAllBookAsync()
         {
-           var books = await _movieContext.Books.ToArrayAsync();
+            var books = await _movieContext.Books.ToArrayAsync();
             return _mapper.Map<List<BookModel>>(books);
         }
 
@@ -49,7 +50,7 @@ namespace starmovie.Repositories
 
         public async Task UpdateBookAsync(int id, BookModel model)
         {
-            if(id == model.Id)
+            if (id == model.Id)
             {
                 var bookUpdate = _mapper.Map<Book>(model);
                 _movieContext.Books.Update(bookUpdate);
