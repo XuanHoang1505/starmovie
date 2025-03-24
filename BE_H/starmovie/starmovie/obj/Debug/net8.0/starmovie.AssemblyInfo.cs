@@ -13,11 +13,9 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("starmovie")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< HEAD
+
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+838b853771c87a5b8f9b2516c3dd8688f2274a79")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9b5808ca7855a891cbca562de41d2cd4beefca02")]
->>>>>>> 942d4f9 (Lưu thay đổi trước khi pull)
+
 [assembly: System.Reflection.AssemblyProductAttribute("starmovie")]
 [assembly: System.Reflection.AssemblyTitleAttribute("starmovie")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
