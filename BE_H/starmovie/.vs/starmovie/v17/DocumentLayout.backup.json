@@ -1,42 +1,62 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE\\starmovie\\",
+  "WorkspaceRootPath": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|d:\\hk224\\learn_javascript\\reactjs\\movie\\starmovie\\be\\starmovie\\starmovie\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|solutionrelative:starmovie\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|e:\\ute\\hk224\\learn_javascript\\reactjs\\movie\\starmovie\\be_h\\starmovie\\starmovie\\repositories\\iaccountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|solutionrelative:starmovie\\repositories\\iaccountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|d:\\hk224\\learn_javascript\\reactjs\\movie\\starmovie\\be\\starmovie\\starmovie\\repositories\\bookrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|solutionrelative:starmovie\\repositories\\bookrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|e:\\ute\\hk224\\learn_javascript\\reactjs\\movie\\starmovie\\be_h\\starmovie\\starmovie\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|solutionrelative:starmovie\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|d:\\hk224\\learn_javascript\\reactjs\\movie\\starmovie\\be\\starmovie\\starmovie\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|e:\\ute\\hk224\\learn_javascript\\reactjs\\movie\\starmovie\\be_h\\starmovie\\starmovie\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|solutionrelative:starmovie\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|d:\\hk224\\learn_javascript\\reactjs\\movie\\starmovie\\be\\starmovie\\starmovie\\repositories\\ibookrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|e:\\ute\\hk224\\learn_javascript\\reactjs\\movie\\starmovie\\be_h\\starmovie\\starmovie\\models\\signinmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|solutionrelative:starmovie\\models\\signinmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|e:\\ute\\hk224\\learn_javascript\\reactjs\\movie\\starmovie\\be_h\\starmovie\\starmovie\\repositories\\accountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|solutionrelative:starmovie\\repositories\\accountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|e:\\ute\\hk224\\learn_javascript\\reactjs\\movie\\starmovie\\be_h\\starmovie\\starmovie\\repositories\\ibookrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|solutionrelative:starmovie\\repositories\\ibookrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|d:\\hk224\\learn_javascript\\reactjs\\movie\\starmovie\\be\\starmovie\\starmovie\\data\\book.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|solutionrelative:starmovie\\data\\book.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|e:\\ute\\hk224\\learn_javascript\\reactjs\\movie\\starmovie\\be_h\\starmovie\\starmovie\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|solutionrelative:starmovie\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|d:\\hk224\\learn_javascript\\reactjs\\movie\\starmovie\\be\\starmovie\\starmovie\\helpers\\applicationmapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|solutionrelative:starmovie\\helpers\\applicationmapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|e:\\ute\\hk224\\learn_javascript\\reactjs\\movie\\starmovie\\be_h\\starmovie\\starmovie\\data\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|solutionrelative:starmovie\\data\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|d:\\hk224\\learn_javascript\\reactjs\\movie\\starmovie\\be\\starmovie\\starmovie\\models\\bookmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|solutionrelative:starmovie\\models\\bookmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|e:\\ute\\hk224\\learn_javascript\\reactjs\\movie\\starmovie\\be_h\\starmovie\\starmovie\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|solutionrelative:starmovie\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|d:\\hk224\\learn_javascript\\reactjs\\movie\\starmovie\\be\\starmovie\\starmovie\\data\\moviecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|e:\\ute\\hk224\\learn_javascript\\reactjs\\movie\\starmovie\\be_h\\starmovie\\starmovie\\data\\moviecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|solutionrelative:starmovie\\data\\moviecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|d:\\hk224\\learn_javascript\\reactjs\\movie\\starmovie\\be\\starmovie\\starmovie\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|solutionrelative:starmovie\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|e:\\ute\\hk224\\learn_javascript\\reactjs\\movie\\starmovie\\be_h\\starmovie\\starmovie\\repositories\\bookrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|solutionrelative:starmovie\\repositories\\bookrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|e:\\ute\\hk224\\learn_javascript\\reactjs\\movie\\starmovie\\be_h\\starmovie\\starmovie\\data\\book.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|solutionrelative:starmovie\\data\\book.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|e:\\ute\\hk224\\learn_javascript\\reactjs\\movie\\starmovie\\be_h\\starmovie\\starmovie\\helpers\\applicationmapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|solutionrelative:starmovie\\helpers\\applicationmapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|e:\\ute\\hk224\\learn_javascript\\reactjs\\movie\\starmovie\\be_h\\starmovie\\starmovie\\models\\bookmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F3C27A5C-30B5-4A39-9303-D515351B59AC}|starmovie\\starmovie.csproj|solutionrelative:starmovie\\models\\bookmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,7 +66,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 291,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 13,
           "Children": [
             {
               "$type": "Bookmark",
@@ -74,49 +94,62 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ProductsController.cs",
-              "DocumentMoniker": "D:\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE\\starmovie\\starmovie\\Controllers\\ProductsController.cs",
-              "RelativeDocumentMoniker": "starmovie\\Controllers\\ProductsController.cs",
-              "ToolTip": "D:\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE\\starmovie\\starmovie\\Controllers\\ProductsController.cs",
-              "RelativeToolTip": "starmovie\\Controllers\\ProductsController.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAswDQAAAAiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-08T05:35:24.225Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "BookRepository.cs",
-              "DocumentMoniker": "D:\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE\\starmovie\\starmovie\\Repositories\\BookRepository.cs",
-              "RelativeDocumentMoniker": "starmovie\\Repositories\\BookRepository.cs",
-              "ToolTip": "D:\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE\\starmovie\\starmovie\\Repositories\\BookRepository.cs",
-              "RelativeToolTip": "starmovie\\Repositories\\BookRepository.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAYwBAAAAAJAAAAAAAAAA==",
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "starmovie\\Controllers\\AccountController.cs",
+              "ToolTip": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "starmovie\\Controllers\\AccountController.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAB0AAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-08T05:09:10.961Z",
+              "WhenOpened": "2025-03-11T15:15:24.901Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ApplicationMapper.cs",
-              "DocumentMoniker": "D:\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE\\starmovie\\starmovie\\Helpers\\ApplicationMapper.cs",
-              "RelativeDocumentMoniker": "starmovie\\Helpers\\ApplicationMapper.cs",
-              "ToolTip": "D:\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE\\starmovie\\starmovie\\Helpers\\ApplicationMapper.cs",
-              "RelativeToolTip": "starmovie\\Helpers\\ApplicationMapper.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAlAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "AccountRepository.cs",
+              "DocumentMoniker": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\Repositories\\AccountRepository.cs",
+              "RelativeDocumentMoniker": "starmovie\\Repositories\\AccountRepository.cs",
+              "ToolTip": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\Repositories\\AccountRepository.cs",
+              "RelativeToolTip": "starmovie\\Repositories\\AccountRepository.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAowDIAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-08T05:04:45.592Z"
+              "WhenOpened": "2025-03-11T13:20:21.793Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 3,
+              "Title": "SignInModel.cs",
+              "DocumentMoniker": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\Models\\SignInModel.cs",
+              "RelativeDocumentMoniker": "starmovie\\Models\\SignInModel.cs",
+              "ToolTip": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\Models\\SignInModel.cs",
+              "RelativeToolTip": "starmovie\\Models\\SignInModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-11T13:06:34.83Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ApplicationUser.cs",
+              "DocumentMoniker": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\Data\\ApplicationUser.cs",
+              "RelativeDocumentMoniker": "starmovie\\Data\\ApplicationUser.cs",
+              "ToolTip": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\Data\\ApplicationUser.cs",
+              "RelativeToolTip": "starmovie\\Data\\ApplicationUser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAYAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-08T14:30:57.663Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
               "Title": "BookModel.cs",
-              "DocumentMoniker": "D:\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE\\starmovie\\starmovie\\Models\\BookModel.cs",
+              "DocumentMoniker": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\Models\\BookModel.cs",
               "RelativeDocumentMoniker": "starmovie\\Models\\BookModel.cs",
-              "ToolTip": "D:\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE\\starmovie\\starmovie\\Models\\BookModel.cs",
+              "ToolTip": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\Models\\BookModel.cs",
               "RelativeToolTip": "starmovie\\Models\\BookModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -126,22 +159,22 @@
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "Program.cs",
-              "DocumentMoniker": "D:\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE\\starmovie\\starmovie\\Program.cs",
+              "DocumentMoniker": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\Program.cs",
               "RelativeDocumentMoniker": "starmovie\\Program.cs",
-              "ToolTip": "D:\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE\\starmovie\\starmovie\\Program.cs",
+              "ToolTip": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\Program.cs",
               "RelativeToolTip": "starmovie\\Program.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAApwCIAAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAADYAAAAAAAAAAAAiwGEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-08T01:54:25.101Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "IBookRepository.cs",
-              "DocumentMoniker": "D:\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE\\starmovie\\starmovie\\Repositories\\IBookRepository.cs",
+              "DocumentMoniker": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\Repositories\\IBookRepository.cs",
               "RelativeDocumentMoniker": "starmovie\\Repositories\\IBookRepository.cs",
-              "ToolTip": "D:\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE\\starmovie\\starmovie\\Repositories\\IBookRepository.cs",
+              "ToolTip": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\Repositories\\IBookRepository.cs",
               "RelativeToolTip": "starmovie\\Repositories\\IBookRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -150,39 +183,89 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 0,
+              "Title": "IAccountRepository.cs",
+              "DocumentMoniker": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\Repositories\\IAccountRepository.cs",
+              "RelativeDocumentMoniker": "starmovie\\Repositories\\IAccountRepository.cs",
+              "ToolTip": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\Repositories\\IAccountRepository.cs",
+              "RelativeToolTip": "starmovie\\Repositories\\IAccountRepository.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAAAgAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-11T15:22:01.32Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "MovieContext.cs",
-              "DocumentMoniker": "D:\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE\\starmovie\\starmovie\\Data\\MovieContext.cs",
+              "DocumentMoniker": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\Data\\MovieContext.cs",
               "RelativeDocumentMoniker": "starmovie\\Data\\MovieContext.cs",
-              "ToolTip": "D:\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE\\starmovie\\starmovie\\Data\\MovieContext.cs",
+              "ToolTip": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\Data\\MovieContext.cs",
               "RelativeToolTip": "starmovie\\Data\\MovieContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-07T13:50:42.545Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "starmovie\\Properties\\launchSettings.json",
+              "ToolTip": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\Properties\\launchSettings.json",
+              "RelativeToolTip": "starmovie\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABoAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-03-11T01:11:16.529Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\appsettings.json",
+              "RelativeDocumentMoniker": "starmovie\\appsettings.json",
+              "ToolTip": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\appsettings.json",
+              "RelativeToolTip": "starmovie\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-03-07T12:47:54.169Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "ApplicationMapper.cs",
+              "DocumentMoniker": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\Helpers\\ApplicationMapper.cs",
+              "RelativeDocumentMoniker": "starmovie\\Helpers\\ApplicationMapper.cs",
+              "ToolTip": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\Helpers\\ApplicationMapper.cs",
+              "RelativeToolTip": "starmovie\\Helpers\\ApplicationMapper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-08T05:04:45.592Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "BookRepository.cs",
+              "DocumentMoniker": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\Repositories\\BookRepository.cs",
+              "RelativeDocumentMoniker": "starmovie\\Repositories\\BookRepository.cs",
+              "ToolTip": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\Repositories\\BookRepository.cs",
+              "RelativeToolTip": "starmovie\\Repositories\\BookRepository.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAYwBAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-08T05:09:10.961Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "Book.cs",
-              "DocumentMoniker": "D:\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE\\starmovie\\starmovie\\Data\\Book.cs",
+              "DocumentMoniker": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\Data\\Book.cs",
               "RelativeDocumentMoniker": "starmovie\\Data\\Book.cs",
-              "ToolTip": "D:\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE\\starmovie\\starmovie\\Data\\Book.cs",
+              "ToolTip": "E:\\UTE\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE_H\\starmovie\\starmovie\\Data\\Book.cs",
               "RelativeToolTip": "starmovie\\Data\\Book.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAqwAoAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-07T13:44:22.55Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE\\starmovie\\starmovie\\appsettings.json",
-              "RelativeDocumentMoniker": "starmovie\\appsettings.json",
-              "ToolTip": "D:\\HK224\\Learn_JavaScript\\ReactJs\\Movie\\starmovie\\BE\\starmovie\\starmovie\\appsettings.json",
-              "RelativeToolTip": "starmovie\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-03-07T12:47:54.169Z"
             }
           ]
         }

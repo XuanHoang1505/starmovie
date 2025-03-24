@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("starmovie")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9b5808ca7855a891cbca562de41d2cd4beefca02")]
 [assembly: System.Reflection.AssemblyProductAttribute("starmovie")]
 [assembly: System.Reflection.AssemblyTitleAttribute("starmovie")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

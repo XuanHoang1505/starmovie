@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "f5WY6XIUBZCORYy2DTAgR5mXWYzIBS9GrL8unCuV54g=",
+  "Hash": "sJvWOIILIJY0dx+bUjzRnCYOQtDVbq++8WaYCx8nwtQ=",
   "Source": "starmovie",
   "BasePath": "_content/starmovie",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }

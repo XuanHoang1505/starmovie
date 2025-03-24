@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using starmovie.Data.Domain;
 
 namespace starmovie.Data
 {
-    public class MovieContext : IdentityDbContext
+    public class MovieContext : IdentityDbContext<ApplicationUser>
     {
         public MovieContext(DbContextOptions<MovieContext> options) : base(options)
         {
@@ -12,6 +13,7 @@ namespace starmovie.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
+
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,8 +26,18 @@ namespace starmovie.Data
                     entityType.SetTableName(tableName.Substring(6));
                 }
             }
-
         }
         public DbSet<Book> Books { get; set; }
+        public DbSet<Movie> Movies { get; set; }
+        public DbSet<Genre> Genres { get; set; }
+        public DbSet<Movie_Genre> MovieGenres { get; set; }
+        public DbSet<Actor> Actors { get; set; }
+        public DbSet<Movie_Actor> MovieActors { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<WatchHistory> WatchHistories { get; set; }
+        public DbSet<User_Movie_Favorite> UserMovieFavorites { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<User_Comment_Like> UserCommentLikes { get; set; }
+        public DbSet<User_FollowActor> UserFollowActors { get; set; }
     }
 }
