@@ -8,7 +8,7 @@ const AppFooter = () => {
         <a href="" target="_blank" rel="noopener noreferrer">
           Star Movie
         </a>
-        <span className="ms-1">&copy; 2025 creativeLabs.</span>
+        <span className="ms-1">&copy; 2025 Star Movie Team. All rights reserved.</span>
       </div>
       <div className="ms-auto">
         <span className="me-1">Powered by</span>

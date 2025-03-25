@@ -13,22 +13,24 @@ import './scss/style.scss'
 import './scss/examples.scss'
 
 function App() {
-  // const { isColorModeSet, setColorMode } = useColorModes('coreui-free-react-admin-template-theme') // để quản lý chế độ màu (color mode) của giao diện người dùng
-  // const storedTheme = useSelector((state) => state.theme)
+  const { isColorModeSet, setColorMode } = useColorModes('coreui-free-react-admin-template-theme') // để quản lý chế độ màu (color mode) của giao diện người dùng
+  const storedTheme = useSelector((state) => state.theme)
+  
 
-  // useEffect(() => {
-  //   const urlParams = new URLSearchParams(window.location.href.split('?')[1])
-  //   const theme = urlParams.get('theme') && urlParams.get('theme').match(/^[A-Za-z0-9\s]+/)[0]
-  //   if (theme) {
-  //     setColorMode(theme)
-  //   }
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.href.split('?')[1])
+    const theme = urlParams.get('theme') && urlParams.get('theme').match(/^[A-Za-z0-9\s]+/)[0]
+    
+    if (theme) {
+      setColorMode(theme)
+    }
 
-  //   if (isColorModeSet()) {
-  //     return
-  //   }
+    if (isColorModeSet()) {
+      return
+    }
 
-  //   setColorMode(storedTheme)
-  // }, []) // eslint-disable-line react-hooks/exhaustive-deps
+    setColorMode(storedTheme)
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
