@@ -1,0 +1,677 @@
+import { useState } from "react";
+import CustomModal from "../CustomModal";
+import ImageModal from "../ImageModal";
+import DeleteModal from "../DeleteModal";
+import "../../../../assets/admin/css/table-management.css";
+import iconTrainer from "../../../../assets/admin/images/icons/trainer.png";
+import iconAll from "../../../../assets/admin/images/icons/all.png";
+import iconIndividual from "../../../../assets/admin/images/icons/personalization.png";
+import defaultImage from "../../../../assets/admin/images/defaultImage.png";
+import { formatDateTimeToDMY } from "../../../../utils/formatDate";
+import TableHeader from "./TableHeader";
+import TableBody from "./TableBody";
+import TableFooter from "./TableFooter";
+
+const TableManagement = ({
+  data,
+  columns,
+  title,
+  defaultColumns,
+  modalContent,
+  statusFunction,
+  handleReset,
+  onEdit,
+  onViewDetail,
+  handleSaveItem,
+  onDelete,
+  onSetting,
+  isLoading,
+  buttonCustom,
+  onResetStatus,
+}) => {
+  // State management
+  const [visibleColumns, setVisibleColumns] = useState(
+    defaultColumns.map((col) => col.key)
+  );
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [sortConfig, setSortConfig] = useState({ key: "id", direction: "asc" });
+  const [showModal, setShowModal] = useState(false); // Hiển thị modal thêm/sửa
+  const [deleteId, setDeleteId] = useState(null); // ID của item cần xóa
+  const [showConfirmModal, setShowConfirmModal] = useState(false); // Hiển thị modal xác nhận xóa
+  const [expandedRows, setExpandedRows] = useState([]); // Theo dõi các hàng đang được mở
+  const [showModalImage, setShowModalImage] = useState(false); // Hiển thị modal hình ảnh lớn
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleRenderBtn = () => {
+    // Danh sách button mặc định nếu button không được định nghĩa
+    const defaultButtonConfig = {
+      btnAdd: true,
+      btnEdit: true,
+      btnDelete: true,
+      btnDetail: false,
+      btnSetting: true,
+    };
+
+    // Sử dụng buttonCustom nếu có, nếu không thì lấy defaultButtonConfig
+    const buttonConfig = buttonCustom ?? defaultButtonConfig;
+    return buttonConfig;
+  };
+
+  // Hàm render custom cell dựa trên loại cột
+  const renderCustomCell = (column, item) => {
+    switch (column.key) {
+      case "status":
+        let statusClass = "";
+        let statusText = "";
+
+        switch (item.status) {
+          case "ACTIVE":
+            statusClass = "text-bg-success";
+            statusText = "Hoạt động";
+            break;
+          case "DISABLED":
+            statusClass = "text-bg-secondary";
+            statusText = "Vô hiệu hóa";
+            break;
+          case "PENDING":
+            statusClass = "text-bg-warning";
+            statusText = "Đang chờ xử lý";
+            break;
+          case "COMPLETED":
+            statusClass = "text-bg-success";
+            statusText = "Hoàn thành";
+            break;
+          case "EXPIRED":
+            statusClass = "text-bg-secondary";
+            statusText = "Đã hết hạn";
+            break;
+          case "USED":
+            statusClass = "text-bg-info";
+            statusText = "Đã sử dụng";
+            break;
+          case "NOT_STARTED":
+            statusClass = "text-bg-secondary";
+            statusText = "Chưa bắt đầu";
+            break;
+          case "IN_PROGRESS":
+            statusClass = "text-bg-primary";
+            statusText = "Đang diễn ra";
+            break;
+          case "WITHDRAWN":
+            statusClass = "text-bg-warning";
+            statusText = "Đã nghỉ học";
+            break;
+          case true:
+            statusClass = "text-bg-info";
+            statusText = "Chưa xem";
+            break;
+          case false:
+            statusClass = "text-bg-secondary";
+            statusText = "Đã xem";
+            break;
+          default:
+            statusClass = "text-bg-muted"; // Trường hợp mặc định
+            statusText = "Không xác định";
+        }
+
+        return (
+          <span
+            className={`rounded-3 fw-bold px-2 py-1 ${statusClass}`}
+            style={{ fontSize: "13px" }}
+          >
+            {statusText}
+          </span>
+        );
+      case "image":
+      case "avatar":
+        return (
+          <img
+            src={item[column.key] || defaultImage} // Nếu item[column.key] không có, hiển thị ảnh mặc định
+            alt={item.name || "Ảnh mặc định"} // Đổi alt thành "Default Image" nếu item.name không tồn tại
+            className="object-fit-cover rounded-circle"
+            style={{ width: "45px", height: "45px", cursor: "pointer" }}
+            onClick={(e) => {
+              e.stopPropagation(); // ngăn chặn sự kiện lan truyền sang cha.
+              handleImageClick(item[column.key] || defaultImage);
+            }}
+          />
+        );
+      case "images":
+        return item[column.key] ? (
+          <div
+            className="py-3"
+            style={{
+              position: "relative",
+              display: "flex",
+              alignItems: "center",
+              gap: "0",
+            }}
+          >
+            {item[column.key]
+              .split(",") // Tách chuỗi thành mảng các URL
+              .map((image, index) => (
+                <img
+                  key={index}
+                  src={image.trim() || defaultImage} // Xóa khoảng trắng dư thừa
+                  alt={`Ảnh ${index + 1}`}
+                  className="rounded-circle object-fit-cover"
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    position: "absolute",
+                    left: `${index * 10}px`, // Dịch chuyển một chút sang phải
+                    zIndex: index, // Mỗi ảnh có z-index tương ứng
+                    cursor: "pointer",
+                    transition: "transform 0.2s, z-index 0.2s",
+                    border: "2px solid white", // Tạo đường viền giữa các ảnh
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.zIndex = 100; // Đưa ảnh lên trên cùng khi hover
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.zIndex = index; // Trả lại z-index ban đầu khi không hover
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation(); // Ngăn chặn sự kiện lan truyền
+                    handleImageClick(image.trim());
+                  }}
+                />
+              ))}
+          </div>
+        ) : (
+          "Không có"
+        );
+      case "rating":
+        const stars = [];
+
+        for (let i = 1; i <= 5; i++) {
+          if (i <= Math.floor(item.rating)) {
+            stars.push(
+              <i
+                key={i}
+                className="bi bi-star-fill text-warning me-1"
+                style={{ fontSize: "15px" }}
+              />
+            );
+          } else if (i === Math.ceil(item.rating) && item.rating % 1 !== 0) {
+            stars.push(
+              <i
+                key={i}
+                className="bi bi-star-half text-warning me-1"
+                style={{ fontSize: "15px" }}
+              />
+            );
+          } else {
+            stars.push(
+              <i
+                key={i}
+                className="bi bi-star text-warning me-1"
+                style={{ fontSize: "15px" }}
+              />
+            );
+          }
+        }
+        return <div>{stars}</div>;
+      case "gender":
+        return (
+          <span className={`rounded-3 px-1 py-1 `}>
+            {item.gender === true ? (
+              <>
+                <i className="bi bi-gender-male"></i> Nam
+              </>
+            ) : (
+              <>
+                <i className="bi bi-gender-female"></i> Nữ
+              </>
+            )}
+          </span>
+        );
+
+      case "dayOfWeek":
+        const dayLabels = {
+          MONDAY: "Thứ Hai",
+          TUESDAY: "Thứ Ba",
+          WEDNESDAY: "Thứ Tư",
+          THURSDAY: "Thứ Năm",
+          FRIDAY: "Thứ Sáu",
+          SATURDAY: "Thứ Bảy",
+          SUNDAY: "Chủ Nhật",
+        };
+        return (
+          <span className={`rounded-3 px-2 py-1`}>
+            {dayLabels[item.dayOfWeek]}
+          </span>
+        );
+
+      case "paymentMethod":
+        const paymentMethodLabels = {
+          CASH: "Tiền mặt",
+          CREDIT_CARD: "Thẻ tính dụng",
+          BANK_TRANSFER: "Chuyển khoản",
+          E_WALLET: "Ví điện tử",
+          UNKNOWN: "Chưa xác định",
+        };
+        return (
+          <span className={`rounded-3 px-2 py-1`}>
+            {paymentMethodLabels[item.paymentMethod]}
+          </span>
+        );
+
+      case "ticketType":
+        let ticketTypeClass = "";
+        let ticketTypeText = "";
+
+        switch (item.ticketType) {
+          case "ONETIME_TICKET":
+            ticketTypeClass = "text-bg-primary"; // Vé cơ bản
+            ticketTypeText = "Vé một lần";
+            break;
+          case "WEEKLY_TICKET":
+            ticketTypeClass = "text-bg-success"; // Vé tuần
+            ticketTypeText = "Vé tuần";
+            break;
+          case "MONTHLY_TICKET":
+            ticketTypeClass = "text-bg-warning"; // Vé tháng (ưu đãi cao)
+            ticketTypeText = "Vé tháng";
+            break;
+          case "STUDENT_TICKET":
+            ticketTypeClass = "text-bg-danger"; // Vé học viên
+            ticketTypeText = "Vé học viên";
+            break;
+          default:
+            ticketTypeClass = "text-bg-muted"; // Trường hợp mặc định
+            ticketTypeText = "Không xác định";
+        }
+
+        return (
+          <span
+            className={`rounded-3 fw-bold px-2 py-1 ${ticketTypeClass}`}
+            style={{ fontSize: "13px" }}
+          >
+            {ticketTypeText}
+          </span>
+        );
+
+      case "role":
+        return (
+          <span className="d-flex align-items-center">
+            {item.role === "ADMIN" && (
+              <>
+                <i className="bi bi-shield-fill text-danger fs-5 mx-1 me-1"></i>
+                Quản Lý
+              </>
+            )}
+            {item.role === "EMPLOYEE" && (
+              <>
+                <i className="fa-solid fa-user-tie fs-5 text-primary me-2 mx-1"></i>
+                Nhân Viên
+              </>
+            )}
+            {item.role === "USER" && (
+              <>
+                <i className="bi bi-person-fill fs-4 text-info me-1"></i>Khách
+                Hàng
+              </>
+            )}
+            {item.role === "TRAINER" && (
+              <>
+                <img
+                  src={iconTrainer}
+                  alt="Role hlv"
+                  className="img-fluid rounded-circle mx-1 me-1"
+                  style={{ width: "20px", height: "20px" }}
+                />
+                Huấn Luyện Viên
+              </>
+            )}
+          </span>
+        );
+
+      case "total":
+      case "penaltyAmount":
+      case "discountedPrice":
+      case "price":
+        const formattedPrice = new Intl.NumberFormat("vi-VN", {
+          style: "currency",
+          currency: "VND",
+          minimumFractionDigits: 0,
+        }).format(item[column.key]);
+        return <span>{formattedPrice}</span>;
+
+      case "percentage":
+      case "discount":
+        return <span>{item[column.key]} %</span>;
+      case "orderDate":
+        return <span>{formatDateTimeToDMY(item.orderDate)}</span>;
+      case "recipientType":
+        return (
+          <span className="d-flex align-items-center">
+            {item.recipientType === "ALL" && (
+              <>
+                <img
+                  src={iconAll}
+                  alt="Icon hlv"
+                  className="img-fluid rounded-circle mx-1 me-1"
+                  style={{ width: "20px", height: "20px" }}
+                />
+                Tất Cả
+              </>
+            )}
+            {item.recipientType === "INDIVIDUAL" && (
+              <>
+                <img
+                  src={iconIndividual}
+                  alt="Icon hlv"
+                  className="img-fluid rounded-circle mx-1 me-1"
+                  style={{ width: "20px", height: "20px" }}
+                />
+                Cá Nhân
+              </>
+            )}
+            {item.recipientType === "ADMIN" && (
+              <>
+                <i className="bi bi-shield-fill text-danger fs-5 mx-1 me-1"></i>
+                Quản Lý
+              </>
+            )}
+            {item.recipientType === "EMPLOYEE" && (
+              <>
+                <i className="fa-solid fa-user-tie fs-5 text-primary me-2 mx-1"></i>
+                Nhân Viên
+              </>
+            )}
+            {item.recipientType === "USER" && (
+              <>
+                <i className="bi bi-person-fill fs-4 text-info me-1"></i>Khách
+                Hàng
+              </>
+            )}
+            {item.recipientType === "TRAINER" && (
+              <>
+                <img
+                  src={iconTrainer}
+                  alt="Icon hlv"
+                  className="img-fluid rounded-circle mx-1 me-1"
+                  style={{ width: "20px", height: "20px" }}
+                />
+                Huấn Luyện Viên
+              </>
+            )}
+          </span>
+        );
+      case "checkInTime":
+        return item[column.key] || "Chưa vào";
+      case "checkOutTime":
+        return item[column.key] || "Chưa ra";
+      case "qrCodeBase64":
+        return (
+          <img
+            src={`data:image/png;base64,${item.qrCodeBase64}`}
+            alt="QR Code"
+            width={45}
+            height={45}
+            style={{ objectFit: "cover", cursor: "pointer" }}
+            onClick={(e) => {
+              e.stopPropagation(); // ngăn chặn sự kiện lan truyền sang cha.
+              handleImageClick(
+                `data:image/png;base64,${item.qrCodeBase64}` || defaultImage
+              );
+            }}
+          />
+        );
+      case "progress":
+        return (
+          <div
+            className="progress"
+            style={{ height: "15px", width: "100px" }}
+            role="progressbar"
+            aria-label="Tiến trình lớp học"
+            aria-valuenow={item[column.key]}
+            aria-valuemin="0"
+            aria-valuemax="100"
+          >
+            <div
+              className="progress-bar progress-bar-striped progress-bar-animated bg-success"
+              style={{
+                width: item[column.key],
+                fontSize: "10px",
+                fontWeight: "bolder",
+              }}
+            >
+              {item[column.key]}%
+            </div>
+          </div>
+        );
+
+      case "timeSlots":
+        const dayOfWeekLabels = {
+          MONDAY: "Thứ Hai",
+          TUESDAY: "Thứ Ba",
+          WEDNESDAY: "Thứ Tư",
+          THURSDAY: "Thứ Năm",
+          FRIDAY: "Thứ Sáu",
+          SATURDAY: "Thứ Bảy",
+          SUNDAY: "Chủ Nhật",
+        };
+        return (
+          <span className={`rounded-3 px-2 py-1`}>
+            {item[column.key].map((timeSlot, index) => (
+              <span key={index} className="badge bg-light text-dark me-1">
+                {dayOfWeekLabels[timeSlot.dayOfWeek]} ({timeSlot.startTime} -{" "}
+                {timeSlot.endTime})
+              </span>
+            ))}
+          </span>
+        );
+
+      default:
+        return item[column.key] || (item[column.key] === 0 ? 0 : "Không có"); // Trả về giá trị mặc định nếu không cần custom
+    }
+  };
+
+  // Xử lý toggle mở rộng hàng
+  const handleRowToggle = (id) => {
+    setExpandedRows((prev) =>
+      prev.includes(id) ? prev.filter((rowId) => rowId !== id) : [...prev, id]
+    );
+  };
+
+  // Tính toán tổng số trang
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+
+  // Sắp xếp dữ liệu theo cấu hình hiện tại
+  const sortedData = [...data].sort((a, b) => {
+    if (sortConfig.key) {
+      let compareA = a[sortConfig.key];
+      let compareB = b[sortConfig.key];
+
+      // Chuẩn hóa dữ liệu dạng chuỗi để so sánh
+      if (typeof compareA === "string" && typeof compareB === "string") {
+        compareA = compareA.toLowerCase();
+        compareB = compareB.toLowerCase();
+      }
+
+      // So sánh theo chiều tăng hoặc giảm
+      return sortConfig.direction === "asc"
+        ? compareA > compareB
+          ? 1
+          : compareA < compareB
+          ? -1
+          : 0
+        : compareA < compareB
+        ? 1
+        : compareA > compareB
+        ? -1
+        : 0;
+    }
+    return 0;
+  });
+
+  // Lọc dữ liệu theo từ khóa tìm kiếm và cột hiển thị
+  const filteredData = sortedData.filter((item) =>
+    visibleColumns.some((key) =>
+      item[key]?.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
+
+  // Phân trang dữ liệu
+  const currentData = filteredData.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  // Xử lý chuyển trang
+  const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
+
+  // Xử lý thay đổi số mục hiển thị mỗi trang
+  const handleItemsPerPageChange = (e) => {
+    setItemsPerPage(parseInt(e.target.value));
+    setCurrentPage(1);
+  };
+
+  // Xử lý sắp xếp
+  const handleSort = (key) => {
+    const direction =
+      sortConfig.key === key && sortConfig.direction === "asc" ? "desc" : "asc";
+    setSortConfig({ key, direction });
+  };
+
+  // Xử lý ẩn/hiện các cột
+  const handleColumnToggle = (key) => {
+    setVisibleColumns((prevColumns) =>
+      prevColumns.includes(key)
+        ? prevColumns.filter((colKey) => colKey !== key)
+        : [...prevColumns, key]
+    );
+  };
+  const handleImageClick = (imageSrc) => {
+    // xử lý khi click vào hình ảnh trên bảng
+    setSelectedImage(imageSrc);
+    setShowModalImage(true);
+  };
+
+  const handleCloseModalImage = () => setShowModalImage(false);
+
+  // Mở modal thêm/sửa
+  const handleShowModal = () => setShowModal(true);
+
+  // Đóng modal thêm/sửa
+  const handleCloseModal = () => {
+    onResetStatus(); // cập nhật trạng thái các công việc
+    setShowModal(false); // Đóng modal
+  };
+
+  // Xử lý lưu dữ liệu
+  const handleSubmit = async () => {
+    if (await handleSaveItem()) {
+      handleCloseModal();
+    }
+  };
+
+  // Xử lý mở modal xác nhận xóa
+  const handleShowConfirmModal = (id) => {
+    setDeleteId(id);
+    setShowConfirmModal(true);
+  };
+
+  // Đóng modal xác nhận xóa
+  const handleCloseConfirmModal = () => {
+    setShowConfirmModal(false);
+    setDeleteId(null);
+  };
+
+  // Xác nhận xóa
+  const handleConfirm = () => {
+    if (deleteId) {
+      onDelete(deleteId);
+      handleCloseConfirmModal();
+    }
+  };
+
+  return (
+    <div className="table__management bg-white col-12 p-4 rounded-3">
+      <h5 className="mb-4 text-uppercase fw-bold">{title}</h5>
+      {/* Table Header */}
+      <TableHeader
+        handleReset={handleReset}
+        onSetting={onSetting}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        handleRenderBtn={handleRenderBtn}
+        handleShowModal={handleShowModal}
+        columns={columns}
+        handleColumnToggle={handleColumnToggle}
+        visibleColumns={visibleColumns}
+      />
+      {/* Table Body */}
+      <TableBody
+        columns={columns}
+        currentData={currentData}
+        expandedRows={expandedRows}
+        handleRowToggle={handleRowToggle}
+        renderCustomCell={renderCustomCell}
+        visibleColumns={visibleColumns}
+        handleSort={handleSort}
+        sortConfig={sortConfig}
+        handleRenderBtn={handleRenderBtn}
+        onEdit={onEdit}
+        handleShowModal={handleShowModal}
+        handleShowConfirmModal={handleShowConfirmModal}
+        onViewDetail={onViewDetail}
+      />
+      {/* Table Footer */}
+      <TableFooter
+        handleItemsPerPageChange={handleItemsPerPageChange}
+        itemsPerPage={itemsPerPage}
+        handlePageChange={handlePageChange}
+        currentPage={currentPage}
+        totalPages={totalPages}
+      />
+      {/* Modal Thêm Item */}
+      <CustomModal
+        show={showModal}
+        handleClose={handleCloseModal}
+        title={
+          statusFunction.isEditing ? (
+            <>
+              CẬP NHẬT BẢN GHI{" "}
+              <i className="bi bi-arrow-repeat text-success fs-4"></i>
+            </>
+          ) : statusFunction.isAdd ? (
+            <>
+              THÊM MỚI BẢN GHI{" "}
+              <i className="bi bi-plus-circle-dotted text-success ms-1 fs-4"></i>
+            </>
+          ) : (
+            <>
+              XEM CHI TIẾT{" "}
+              <i className="bi bi-card-list text-succes ms-1 fs-4"></i>
+            </>
+          )
+        }
+        onSubmit={handleSubmit}
+        isLoading={isLoading}
+        statusFunction={statusFunction}
+      >
+        {/* Truyền children modal thông qua props */}
+        {modalContent}
+      </CustomModal>
+      <DeleteModal
+        show={showConfirmModal}
+        onConfirm={handleConfirm}
+        onClose={handleCloseConfirmModal}
+        isLoading={isLoading}
+      />
+      {/* Sử dụng ImageModal */}
+      <ImageModal
+        show={showModalImage}
+        imageSrc={selectedImage}
+        onClose={handleCloseModalImage}
+      />
+    </div>
+  );
+};
+
+export default TableManagement;
