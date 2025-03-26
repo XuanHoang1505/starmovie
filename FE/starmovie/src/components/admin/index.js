@@ -1,6 +1,7 @@
-import AppContent from "./AppContent";
-import AppSidebar from "../admin/AppSidebar/AppSidebar";
-import AppHeader from "../admin/AppHeader/AppHeader";
-import AppFooter from "../admin/AppFooter";
+import AppContent from "./appContent/AppContent";
+import AppSidebar from "./appSidebar/AppSidebar";
+import AppHeader from "./appHeader/AppHeader";
+import AppFooter from "./appFooter/AppFooter";
+import TableManagement from "./common/tables/TableManagement";
 
-export { AppContent, AppSidebar, AppHeader, AppFooter };
+export { AppContent, AppSidebar, AppHeader, AppFooter, TableManagement };
