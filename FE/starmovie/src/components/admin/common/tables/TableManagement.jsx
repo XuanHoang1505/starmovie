@@ -89,22 +89,6 @@ const TableManagement = ({
             statusClass = "text-bg-secondary";
             statusText = "Đã hết hạn";
             break;
-          case "USED":
-            statusClass = "text-bg-info";
-            statusText = "Đã sử dụng";
-            break;
-          case "NOT_STARTED":
-            statusClass = "text-bg-secondary";
-            statusText = "Chưa bắt đầu";
-            break;
-          case "IN_PROGRESS":
-            statusClass = "text-bg-primary";
-            statusText = "Đang diễn ra";
-            break;
-          case "WITHDRAWN":
-            statusClass = "text-bg-warning";
-            statusText = "Đã nghỉ học";
-            break;
           case true:
             statusClass = "text-bg-info";
             statusText = "Chưa xem";
@@ -231,75 +215,40 @@ const TableManagement = ({
             )}
           </span>
         );
+      // case "vipType":
+      //   let ticketTypeClass = "";
+      //   let ticketTypeText = "";
 
-      case "dayOfWeek":
-        // eslint-disable-next-line no-case-declarations
-        const dayLabels = {
-          MONDAY: "Thứ Hai",
-          TUESDAY: "Thứ Ba",
-          WEDNESDAY: "Thứ Tư",
-          THURSDAY: "Thứ Năm",
-          FRIDAY: "Thứ Sáu",
-          SATURDAY: "Thứ Bảy",
-          SUNDAY: "Chủ Nhật",
-        };
-        return (
-          <span className={`rounded-3 px-2 py-1`}>
-            {dayLabels[item.dayOfWeek]}
-          </span>
-        );
+      //   switch (item.ticketType) {
+      //     case "ONETIME_TICKET":
+      //       ticketTypeClass = "text-bg-primary"; // Vé cơ bản
+      //       ticketTypeText = "Vé một lần";
+      //       break;
+      //     case "WEEKLY_TICKET":
+      //       ticketTypeClass = "text-bg-success"; // Vé tuần
+      //       ticketTypeText = "Vé tuần";
+      //       break;
+      //     case "MONTHLY_TICKET":
+      //       ticketTypeClass = "text-bg-warning"; // Vé tháng (ưu đãi cao)
+      //       ticketTypeText = "Vé tháng";
+      //       break;
+      //     case "STUDENT_TICKET":8
+      //       ticketTypeClass = "text-bg-danger"; // Vé học viên
+      //       ticketTypeText = "Vé học viên";
+      //       break;
+      //     default:
+      //       ticketTypeClass = "text-bg-muted"; // Trường hợp mặc định
+      //       ticketTypeText = "Không xác định";
+      //   }
 
-      case "paymentMethod":
-        // eslint-disable-next-line no-case-declarations
-        const paymentMethodLabels = {
-          CASH: "Tiền mặt",
-          CREDIT_CARD: "Thẻ tính dụng",
-          BANK_TRANSFER: "Chuyển khoản",
-          E_WALLET: "Ví điện tử",
-          UNKNOWN: "Chưa xác định",
-        };
-        return (
-          <span className={`rounded-3 px-2 py-1`}>
-            {paymentMethodLabels[item.paymentMethod]}
-          </span>
-        );
-
-      case "ticketType":
-        // eslint-disable-next-line no-case-declarations
-        let ticketTypeClass = "";
-        // eslint-disable-next-line no-case-declarations
-        let ticketTypeText = "";
-
-        switch (item.ticketType) {
-          case "ONETIME_TICKET":
-            ticketTypeClass = "text-bg-primary"; // Vé cơ bản
-            ticketTypeText = "Vé một lần";
-            break;
-          case "WEEKLY_TICKET":
-            ticketTypeClass = "text-bg-success"; // Vé tuần
-            ticketTypeText = "Vé tuần";
-            break;
-          case "MONTHLY_TICKET":
-            ticketTypeClass = "text-bg-warning"; // Vé tháng (ưu đãi cao)
-            ticketTypeText = "Vé tháng";
-            break;
-          case "STUDENT_TICKET":
-            ticketTypeClass = "text-bg-danger"; // Vé học viên
-            ticketTypeText = "Vé học viên";
-            break;
-          default:
-            ticketTypeClass = "text-bg-muted"; // Trường hợp mặc định
-            ticketTypeText = "Không xác định";
-        }
-
-        return (
-          <span
-            className={`rounded-3 fw-bold px-2 py-1 ${ticketTypeClass}`}
-            style={{ fontSize: "13px" }}
-          >
-            {ticketTypeText}
-          </span>
-        );
+      //   return (
+      //     <span
+      //       className={`rounded-3 fw-bold px-2 py-1 ${ticketTypeClass}`}
+      //       style={{ fontSize: "13px" }}
+      //     >
+      //       {ticketTypeText}
+      //     </span>
+      //   );
 
       case "role":
         return (
@@ -310,35 +259,15 @@ const TableManagement = ({
                 Quản Lý
               </>
             )}
-            {item.role === "EMPLOYEE" && (
-              <>
-                <i className="fa-solid fa-user-tie fs-5 text-primary me-2 mx-1"></i>
-                Nhân Viên
-              </>
-            )}
             {item.role === "USER" && (
               <>
                 <i className="bi bi-person-fill fs-4 text-info me-1"></i>Khách
                 Hàng
               </>
             )}
-            {item.role === "TRAINER" && (
-              <>
-                <img
-                  src={iconTrainer}
-                  alt="Role hlv"
-                  className="img-fluid rounded-circle mx-1 me-1"
-                  style={{ width: "20px", height: "20px" }}
-                />
-                Huấn Luyện Viên
-              </>
-            )}
           </span>
         );
 
-      case "total":
-      case "penaltyAmount":
-      case "discountedPrice":
       case "price":
         // eslint-disable-next-line no-case-declarations
         const formattedPrice = new Intl.NumberFormat("vi-VN", {
@@ -349,70 +278,7 @@ const TableManagement = ({
         return <span>{formattedPrice}</span>;
 
       case "percentage":
-      case "discount":
         return <span>{item[column.key]} %</span>;
-      case "orderDate":
-        return <span>{formatDateTimeToDMY(item.orderDate)}</span>;
-      case "recipientType":
-        return (
-          <span className="d-flex align-items-center">
-            {item.recipientType === "ALL" && (
-              <>
-                <img
-                  src={iconAll}
-                  alt="Icon hlv"
-                  className="img-fluid rounded-circle mx-1 me-1"
-                  style={{ width: "20px", height: "20px" }}
-                />
-                Tất Cả
-              </>
-            )}
-            {item.recipientType === "INDIVIDUAL" && (
-              <>
-                <img
-                  src={iconIndividual}
-                  alt="Icon hlv"
-                  className="img-fluid rounded-circle mx-1 me-1"
-                  style={{ width: "20px", height: "20px" }}
-                />
-                Cá Nhân
-              </>
-            )}
-            {item.recipientType === "ADMIN" && (
-              <>
-                <i className="bi bi-shield-fill text-danger fs-5 mx-1 me-1"></i>
-                Quản Lý
-              </>
-            )}
-            {item.recipientType === "EMPLOYEE" && (
-              <>
-                <i className="fa-solid fa-user-tie fs-5 text-primary me-2 mx-1"></i>
-                Nhân Viên
-              </>
-            )}
-            {item.recipientType === "USER" && (
-              <>
-                <i className="bi bi-person-fill fs-4 text-info me-1"></i>Khách
-                Hàng
-              </>
-            )}
-            {item.recipientType === "TRAINER" && (
-              <>
-                <img
-                  src={iconTrainer}
-                  alt="Icon hlv"
-                  className="img-fluid rounded-circle mx-1 me-1"
-                  style={{ width: "20px", height: "20px" }}
-                />
-                Huấn Luyện Viên
-              </>
-            )}
-          </span>
-        );
-      case "checkInTime":
-        return item[column.key] || "Chưa vào";
-      case "checkOutTime":
-        return item[column.key] || "Chưa ra";
       case "qrCodeBase64":
         return (
           <img
@@ -453,27 +319,6 @@ const TableManagement = ({
             </div>
           </div>
         );
-
-      case "timeSlots":
-        { const dayOfWeekLabels = {
-          MONDAY: "Thứ Hai",
-          TUESDAY: "Thứ Ba",
-          WEDNESDAY: "Thứ Tư",
-          THURSDAY: "Thứ Năm",
-          FRIDAY: "Thứ Sáu",
-          SATURDAY: "Thứ Bảy",
-          SUNDAY: "Chủ Nhật",
-        };
-        return (
-          <span className={`rounded-3 px-2 py-1`}>
-            {item[column.key].map((timeSlot, index) => (
-              <span key={index} className="badge bg-light text-dark me-1">
-                {dayOfWeekLabels[timeSlot.dayOfWeek]} ({timeSlot.startTime} -{" "}
-                {timeSlot.endTime})
-              </span>
-            ))}
-          </span>
-        ); }
 
       default:
         return item[column.key] || (item[column.key] === 0 ? 0 : "Không có"); // Trả về giá trị mặc định nếu không cần custom
