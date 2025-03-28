@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using starmovie.Models;
 
-namespace starmovie.Repositories
+namespace starmovie.Repositories.Interfaces
 {
     public interface IAccountRepository
     {

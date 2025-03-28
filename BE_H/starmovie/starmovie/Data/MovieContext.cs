@@ -28,9 +28,15 @@ namespace starmovie.Data
             }
         }
         public DbSet<Book> Books { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Movie_Category> MovieCategories { get; set; }
+        public DbSet<MovieSlide> MovieSlides { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Genre> Genres { get; set; }
+        public DbSet<Episode> Episodes { get; set; }
         public DbSet<Movie_Genre> MovieGenres { get; set; }
+        public DbSet<VipType> VipTypes { get; set; }
+        public DbSet<Vip> Vips { get; set; }
         public DbSet<Actor> Actors { get; set; }
         public DbSet<Movie_Actor> MovieActors { get; set; }
         public DbSet<Review> Reviews { get; set; }

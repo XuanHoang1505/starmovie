@@ -8,10 +8,8 @@ namespace starmovie.Data.Domain
     {
         public int MovieID { get; set; }
         public int GenreID { get; set; }
-
         [ForeignKey("MovieID")]
         public Movie Movie { get; set; }
-
         [ForeignKey("GenreID")]
         public Genre Genre { get; set; }
     }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using starmovie.Models;
 using starmovie.Repositories;
+using starmovie.Repositories.Interfaces;
 
 namespace starmovie.Controllers
 {
@@ -12,17 +13,20 @@ namespace starmovie.Controllers
     {
         private readonly IBookRepository _bookRepo;
 
-        public ProductsController(IBookRepository bookRepository) {
+        public ProductsController(IBookRepository bookRepository)
+        {
             _bookRepo = bookRepository;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllBook() {
+        public async Task<IActionResult> GetAllBook()
+        {
             try
             {
                 return Ok(await _bookRepo.GetAllBookAsync());
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return BadRequest(ex.Message);
             }
 
@@ -44,7 +48,8 @@ namespace starmovie.Controllers
                 var book = await _bookRepo.GetBookAsync(newBookId);
                 return book == null ? NotFound() : Ok(book);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return BadRequest(ex.Message);
             }
         }
@@ -53,7 +58,7 @@ namespace starmovie.Controllers
         [Authorize]
         public async Task<IActionResult> UpadteBook(int id, BookModel bookModel)
         {
-            if(id != bookModel.Id)
+            if (id != bookModel.Id)
             {
                 return NotFound();
             }
@@ -70,12 +75,13 @@ namespace starmovie.Controllers
                 var bookDelete = await _bookRepo.GetBookAsync(id);
                 if (bookDelete == null)
                 {
-                    return NotFound($"Không tìm thấy sách có id = {id}" );
+                    return NotFound($"Không tìm thấy sách có id = {id}");
                 }
                 await _bookRepo.DeleteBookAsync(id);
                 return Ok($"Sách có id = {id} đã được xóa");
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }

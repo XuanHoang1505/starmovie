@@ -4,7 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using starmovie.Data;
 using starmovie.Repositories;
+using starmovie.Repositories.Implementations;
+using starmovie.Repositories.Interfaces;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,10 +62,10 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddAutoMapper(typeof(Program));
 
-
 // Đăng kí Api controller
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 
 builder.Services.AddCors(options =>
 {
@@ -74,7 +77,18 @@ builder.Services.AddCors(options =>
                   .AllowAnyHeader();
         });
 });
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    });
+//tránh vòng lặp
 
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+});
 
 var app = builder.Build();
 

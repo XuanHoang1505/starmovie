@@ -7,21 +7,16 @@ namespace starmovie.Data.Domain
     {
         [Key]
         public int CommentID { get; set; }
-
         public string UserID { get; set; }
-        public int MovieID { get; set; }
-
-        [StringLength(255)]
+        public int EpisodeID { get; set; }
+        [Required, StringLength(500)]
         public string Content { get; set; }
-
         public DateTime Timestamp { get; set; }
-
-        public int? ParentCommentID { get; set; }
-
+        public int ParentCommentID { get; set; }
         [ForeignKey("UserID")]
         public ApplicationUser User { get; set; }
-
-        [ForeignKey("MovieID")]
-        public Movie Movie { get; set; }
+        [ForeignKey("EpisodeID")]
+        public Episode Episode { get; set; }
+        public List<User_Comment_Like> CommentLikes { get; set; }
     }
 }

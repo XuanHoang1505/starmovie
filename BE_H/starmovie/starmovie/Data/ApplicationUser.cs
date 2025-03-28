@@ -16,9 +16,10 @@ namespace starmovie.Data
 
         public DateTime BirthDate { get; set; }
 
-        public bool IsVIP { get; set; }
         public ICollection<Review> Reviews { get; set; }
         public ICollection<WatchHistory> WatchHistories { get; set; }
+        public ICollection<User_FollowActor> UserFollowActors { get; set; }
+        public ICollection<User_Comment_Like> likes { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public ICollection<User_Movie_Favorite> FavoriteMovies { get; set; }
     }

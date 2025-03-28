@@ -9,6 +9,9 @@ namespace starmovie.Helpers
         public ApplicationMapper()
         {
             CreateMap<Book, BookModel>().ReverseMap();
+            CreateMap<GenreDTO, Genre>()
+            .ForMember(dest => dest.GenreName, opt => opt.MapFrom(src => src.Name))
+            .ReverseMap();
         }
     }
 }

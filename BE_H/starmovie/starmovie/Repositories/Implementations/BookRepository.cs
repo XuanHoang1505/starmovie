@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using starmovie.Data;
-using starmovie.Data.Domain;
 using starmovie.Models;
+using starmovie.Repositories.Interfaces;
 
-namespace starmovie.Repositories
+namespace starmovie.Repositories.Implementations
 {
     public class BookRepository : IBookRepository
     {
