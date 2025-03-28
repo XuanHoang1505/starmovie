@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using starmovie.Models;
 using starmovie.Repositories;
+using starmovie.Repositories.Interfaces;
 
 namespace starmovie.Controllers
 {
@@ -10,7 +11,7 @@ namespace starmovie.Controllers
     {
         private readonly IAccountRepository _accountRepository;
 
-        public AccountController(IAccountRepository  accountRepository)
+        public AccountController(IAccountRepository accountRepository)
         {
             _accountRepository = accountRepository;
         }

@@ -7,24 +7,21 @@ namespace starmovie.Data.Domain
     {
         [Key]
         public int MovieID { get; set; }
-
         [Required, StringLength(100)]
         public string Title { get; set; }
-
+        [Required]
         public string Description { get; set; }
-
+        [Required]
         public DateTime ReleaseDate { get; set; }
-
-        [StringLength(30)]
-        public string Country { get; set; }
-
-        public decimal Rating { get; set; }
-
-        public TimeSpan Duration { get; set; }
-
-        public ICollection<Movie_Genre> MovieGenres { get; set; }
-        public ICollection<Movie_Actor> MovieActors { get; set; }
-        public ICollection<Review> Reviews { get; set; }
-        public ICollection<WatchHistory> WatchHistories { get; set; }
+        public float Rating { get; set; }
+        [StringLength(255)]
+        public string TrailerUrl { get; set; }
+        public List<Movie_Genre> MovieGenres { get; set; }
+        public List<Movie_Category> MovieCategories { get; set; }
+        public List<Movie_Actor> MovieActors { get; set; }
+        public List<Episode> Episodes { get; set; }
+        public List<MovieSlide> MovieSlides { get; set; }
+        public List<Review> Reviews { get; set; }
+        public List<User_Movie_Favorite> FavoriteMovies { get; set; }
     }
 }

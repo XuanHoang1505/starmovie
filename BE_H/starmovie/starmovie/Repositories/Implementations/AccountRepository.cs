@@ -2,11 +2,12 @@
 using Microsoft.IdentityModel.Tokens;
 using starmovie.Data;
 using starmovie.Models;
+using starmovie.Repositories.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace starmovie.Repositories
+namespace starmovie.Repositories.Implementations
 {
     public class AccountRepository : IAccountRepository
     {

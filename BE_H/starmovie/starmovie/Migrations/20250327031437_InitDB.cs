@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace starmovie.Migrations
 {
     /// <inheritdoc />
-    public partial class InitCreateDB : Migration
+    public partial class InitDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -23,7 +23,7 @@ namespace starmovie.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    BirthDay = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    BirthDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     Nationality = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
@@ -53,6 +53,21 @@ namespace starmovie.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    CategoryID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    CategoryName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.CategoryID);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Genres",
                 columns: table => new
                 {
@@ -78,10 +93,9 @@ namespace starmovie.Migrations
                     Description = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ReleaseDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Country = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Rating = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
-                    Duration = table.Column<TimeSpan>(type: "time(6)", nullable: false)
+                    Rating = table.Column<float>(type: "float", nullable: false),
+                    TrailerUrl = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -123,7 +137,6 @@ namespace starmovie.Migrations
                     Gender = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     BirthDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    IsVIP = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
@@ -152,13 +165,55 @@ namespace starmovie.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "VipTypes",
+                columns: table => new
+                {
+                    VipTypeID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    TypeName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Price = table.Column<double>(type: "double", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VipTypes", x => x.VipTypeID);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Episodes",
+                columns: table => new
+                {
+                    EpisodeID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    EpisodeTitle = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Duration = table.Column<TimeSpan>(type: "time(6)", nullable: false),
+                    ReleaseDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    TrailerUrl = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    MovieUrl = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    MovieID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Episodes", x => x.EpisodeID);
+                    table.ForeignKey(
+                        name: "FK_Episodes_Movies_MovieID",
+                        column: x => x.MovieID,
+                        principalTable: "Movies",
+                        principalColumn: "MovieID",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "MovieActors",
                 columns: table => new
                 {
                     MovieID = table.Column<int>(type: "int", nullable: false),
-                    ActorID = table.Column<int>(type: "int", nullable: false),
-                    RoleName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    ActorID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -171,6 +226,31 @@ namespace starmovie.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_MovieActors_Movies_MovieID",
+                        column: x => x.MovieID,
+                        principalTable: "Movies",
+                        principalColumn: "MovieID",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "MovieCategories",
+                columns: table => new
+                {
+                    MovieID = table.Column<int>(type: "int", nullable: false),
+                    CategoryID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MovieCategories", x => new { x.MovieID, x.CategoryID });
+                    table.ForeignKey(
+                        name: "FK_MovieCategories_Categories_CategoryID",
+                        column: x => x.CategoryID,
+                        principalTable: "Categories",
+                        principalColumn: "CategoryID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MovieCategories_Movies_MovieID",
                         column: x => x.MovieID,
                         principalTable: "Movies",
                         principalColumn: "MovieID",
@@ -204,6 +284,27 @@ namespace starmovie.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "MovieSlides",
+                columns: table => new
+                {
+                    SlideID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Position = table.Column<int>(type: "int", nullable: false),
+                    MovieID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MovieSlides", x => x.SlideID);
+                    table.ForeignKey(
+                        name: "FK_MovieSlides_Movies_MovieID",
+                        column: x => x.MovieID,
+                        principalTable: "Movies",
+                        principalColumn: "MovieID",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "RoleClaims",
                 columns: table => new
                 {
@@ -223,38 +324,6 @@ namespace starmovie.Migrations
                         name: "FK_RoleClaims_Roles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "Roles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Comments",
-                columns: table => new
-                {
-                    CommentID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    UserID = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    MovieID = table.Column<int>(type: "int", nullable: false),
-                    Content = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Timestamp = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ParentCommentID = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Comments", x => x.CommentID);
-                    table.ForeignKey(
-                        name: "FK_Comments_Movies_MovieID",
-                        column: x => x.MovieID,
-                        principalTable: "Movies",
-                        principalColumn: "MovieID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Comments_Users_UserID",
-                        column: x => x.UserID,
-                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
@@ -447,24 +516,86 @@ namespace starmovie.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "WatchHistories",
+                name: "Vips",
                 columns: table => new
                 {
-                    HistoryID = table.Column<int>(type: "int", nullable: false)
+                    VipID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UserID = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    MovieID = table.Column<int>(type: "int", nullable: false),
-                    WatchDate = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    VipTypeID = table.Column<int>(type: "int", nullable: false),
+                    RegisteredDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    ExpirationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WatchHistories", x => x.HistoryID);
+                    table.PrimaryKey("PK_Vips", x => x.VipID);
                     table.ForeignKey(
-                        name: "FK_WatchHistories_Movies_MovieID",
-                        column: x => x.MovieID,
-                        principalTable: "Movies",
-                        principalColumn: "MovieID",
+                        name: "FK_Vips_Users_UserID",
+                        column: x => x.UserID,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Vips_VipTypes_VipTypeID",
+                        column: x => x.VipTypeID,
+                        principalTable: "VipTypes",
+                        principalColumn: "VipTypeID",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    CommentID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    UserID = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    EpisodeID = table.Column<int>(type: "int", nullable: false),
+                    Content = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Timestamp = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    ParentCommentID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.CommentID);
+                    table.ForeignKey(
+                        name: "FK_Comments_Episodes_EpisodeID",
+                        column: x => x.EpisodeID,
+                        principalTable: "Episodes",
+                        principalColumn: "EpisodeID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Comments_Users_UserID",
+                        column: x => x.UserID,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "WatchHistories",
+                columns: table => new
+                {
+                    WatchHistoryID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    UserID = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    EpisodeID = table.Column<int>(type: "int", nullable: false),
+                    WatchedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WatchHistories", x => x.WatchHistoryID);
+                    table.ForeignKey(
+                        name: "FK_WatchHistories_Episodes_EpisodeID",
+                        column: x => x.EpisodeID,
+                        principalTable: "Episodes",
+                        principalColumn: "EpisodeID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_WatchHistories_Users_UserID",
@@ -503,9 +634,9 @@ namespace starmovie.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_MovieID",
+                name: "IX_Comments_EpisodeID",
                 table: "Comments",
-                column: "MovieID");
+                column: "EpisodeID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_UserID",
@@ -513,14 +644,29 @@ namespace starmovie.Migrations
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Episodes_MovieID",
+                table: "Episodes",
+                column: "MovieID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MovieActors_ActorID",
                 table: "MovieActors",
                 column: "ActorID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MovieCategories_CategoryID",
+                table: "MovieCategories",
+                column: "CategoryID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MovieGenres_GenreID",
                 table: "MovieGenres",
                 column: "GenreID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MovieSlides_MovieID",
+                table: "MovieSlides",
+                column: "MovieID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_MovieID",
@@ -585,9 +731,19 @@ namespace starmovie.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_WatchHistories_MovieID",
+                name: "IX_Vips_UserID",
+                table: "Vips",
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vips_VipTypeID",
+                table: "Vips",
+                column: "VipTypeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WatchHistories_EpisodeID",
                 table: "WatchHistories",
-                column: "MovieID");
+                column: "EpisodeID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WatchHistories_UserID",
@@ -605,7 +761,13 @@ namespace starmovie.Migrations
                 name: "MovieActors");
 
             migrationBuilder.DropTable(
+                name: "MovieCategories");
+
+            migrationBuilder.DropTable(
                 name: "MovieGenres");
+
+            migrationBuilder.DropTable(
+                name: "MovieSlides");
 
             migrationBuilder.DropTable(
                 name: "Reviews");
@@ -635,7 +797,13 @@ namespace starmovie.Migrations
                 name: "UserTokens");
 
             migrationBuilder.DropTable(
+                name: "Vips");
+
+            migrationBuilder.DropTable(
                 name: "WatchHistories");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Genres");
@@ -650,10 +818,16 @@ namespace starmovie.Migrations
                 name: "Roles");
 
             migrationBuilder.DropTable(
-                name: "Movies");
+                name: "VipTypes");
+
+            migrationBuilder.DropTable(
+                name: "Episodes");
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Movies");
         }
     }
 }
