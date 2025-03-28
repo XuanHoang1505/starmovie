@@ -4,7 +4,7 @@ using starmovie.Data.Domain;
 using starmovie.Models;
 using starmovie.Repositories.Interfaces;
 
-namespace starmovie.Controllers
+namespace starmovie.Controllers.admin
 {
     [Route("api/admin/genres")]
     [ApiController]
@@ -55,14 +55,21 @@ namespace starmovie.Controllers
             if (existingGenre == null) return NotFound();
 
             _mapper.Map(genreDto, existingGenre);
-            await _genreRepository.UpdateGenreAsync(existingGenre);
-            var updatedGenreDto = _mapper.Map<GenreDTO>(existingGenre);
+
+            var updatedGenre = await _genreRepository.UpdateGenreAsync(existingGenre);
+            if (updatedGenre == null) return NotFound();
+
+            var updatedGenreDto = _mapper.Map<GenreDTO>(updatedGenre);
             return Ok(updatedGenreDto);
         }
+
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteGenre(int id)
         {
+            var genre = await _genreRepository.GetGenreByIdAsync(id);
+            if (genre == null) return NotFound();
+
             await _genreRepository.DeleteGenreAsync(id);
             return NoContent();
         }
