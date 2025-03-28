@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Spinner, Form } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
-import { TableManagement } from "../../../components/admin/index";
+import { TableManagement, Page500 } from "../../../components/admin/index";
 import GenreService from "../../../services/admin/GenreService";
 import { toast } from "react-toastify";
 

@@ -35,7 +35,7 @@ namespace starmovie.Repositories.Implementations
         {
             if (genre == null || string.IsNullOrWhiteSpace(genre.GenreName))
             {
-                throw new ArgumentException("Genre name cannot be null or empty.");
+                throw new ArgumentException("Tên thể loại không được để trống.");
             }
 
             _context.Genres.Add(genre);
@@ -43,12 +43,12 @@ namespace starmovie.Repositories.Implementations
         }
 
 
-        public async Task<GenreDTO> UpdateGenreAsync(Genre genre)
+        public async Task<Genre> UpdateGenreAsync(Genre genre)
         {
             _context.Genres.Update(genre);
             await _context.SaveChangesAsync();
 
-            return _mapper.Map<GenreDTO>(genre);
+            return genre;
         }
 
         public async Task DeleteGenreAsync(int id)
