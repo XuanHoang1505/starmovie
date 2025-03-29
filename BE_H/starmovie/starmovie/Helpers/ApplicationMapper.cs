@@ -13,7 +13,10 @@ namespace starmovie.Helpers
                 .ForMember(dest => dest.GenreName, opt => opt.MapFrom(src => src.Name))
                     .ReverseMap();
             CreateMap<CategoryDTO, Category>().ReverseMap();
-
+            CreateMap<ActorDTO, Actor>()
+                .ForMember(dest => dest.BirthDate, opt => opt.MapFrom(src => DateTime.ParseExact(src.BirthDate, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)))
+                .ReverseMap()
+                .ForMember(dest => dest.BirthDate, opt => opt.MapFrom(src => src.BirthDate.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)));
         }
     }
 }

@@ -9,6 +9,8 @@ namespace starmovie.Data.Domain
         public int MovieID { get; set; }
         [Required, StringLength(100)]
         public string Title { get; set; }
+        [Required, StringLength(255)]
+        public string Poster { get; set; }
         [Required]
         public string Description { get; set; }
         [Required]
