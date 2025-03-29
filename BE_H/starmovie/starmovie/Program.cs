@@ -2,10 +2,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using starmovie.Configurations;
 using starmovie.Data;
 using starmovie.Repositories;
 using starmovie.Repositories.Implementations;
 using starmovie.Repositories.Interfaces;
+using starmovie.Services;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -67,6 +69,12 @@ builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IActorRepository, ActorRepository>();
+
+// Đăng ký CloudinaryService
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+builder.Services.AddSingleton<CloudinaryService>();
+
 
 builder.Services.AddCors(options =>
 {

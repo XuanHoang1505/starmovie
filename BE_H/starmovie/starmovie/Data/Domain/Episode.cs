@@ -14,6 +14,8 @@ namespace starmovie.Data.Domain
         [Required]
         public DateTime ReleaseDate { get; set; }
         [StringLength(255)]
+        public string EpisodeImage { get; set; }
+        [StringLength(255)]
         public string TrailerUrl { get; set; }
         [StringLength(255)]
         public string MovieUrl { get; set; }
