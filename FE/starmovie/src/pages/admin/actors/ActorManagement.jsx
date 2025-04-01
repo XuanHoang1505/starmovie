@@ -337,7 +337,7 @@ const ActorManagement = () => {
   return (
     <>
       <Helmet>
-        <title>Quản lý diễn viên - Hight Star</title>
+        <title>Quản lý diễn viên - Star Movie</title>
       </Helmet>
       {/* Hiển thị loader khi đang tải trang */}
       {loadingPage ? (

@@ -3,14 +3,13 @@ import CustomModal from "../CustomModal";
 import ImageModal from "../ImageModal";
 import DeleteModal from "../DeleteModal";
 import "../../../../assets/admin/css/table-management.css";
-import iconTrainer from "../../../../assets/admin/images/icons/trainer.png";
-import iconAll from "../../../../assets/admin/images/icons/all.png";
-import iconIndividual from "../../../../assets/admin/images/icons/personalization.png";
 import defaultImage from "../../../../assets/admin/images/defaultImage.png";
-import { formatDateTimeToDMY } from "../../../../utils/formatDate";
+import defaultVideo from "../../../../assets/admin/images/defaultVideo.png";
 import TableHeader from "./TableHeader";
 import TableBody from "./TableBody";
 import TableFooter from "./TableFooter";
+import { Badge } from "react-bootstrap";
+import VideoModal from "../VideoModal";
 
 const TableManagement = ({
   data,
@@ -43,6 +42,8 @@ const TableManagement = ({
   const [expandedRows, setExpandedRows] = useState([]); // Theo dõi các hàng đang được mở
   const [showModalImage, setShowModalImage] = useState(false); // Hiển thị modal hình ảnh lớn
   const [selectedImage, setSelectedImage] = useState(null);
+  const [showModalVideo, setShowModalVideo] = useState(false); // Hiển thị modal hình ảnh lớn
+  const [selectedVideo, setSelectedVideo] = useState(null);
 
   const handleRenderBtn = () => {
     // Danh sách button mặc định nếu button không được định nghĩa
@@ -123,6 +124,34 @@ const TableManagement = ({
               handleImageClick(item[column.key] || defaultImage);
             }}
           />
+        );
+      case "poster":
+        return (
+          <img
+            src={item[column.key] || defaultImage} // Nếu item[column.key] không có, hiển thị ảnh mặc định
+            alt={item.poster || "Ảnh mặc định"} // Đổi alt thành "Default Image" nếu item.name không tồn tại
+            className="object-fit-cover"
+            style={{ width: "45px", height: "45px", cursor: "pointer" }}
+            onClick={(e) => {
+              e.stopPropagation(); // ngăn chặn sự kiện lan truyền sang cha.
+              handleImageClick(item[column.key] || defaultImage);
+            }}
+          />
+        );
+      case "trailerUrl":
+        return item[column.key] ? (
+          <img
+            src={defaultVideo} // Nếu item[column.key] không có, hiển thị ảnh mặc định
+            alt="Chưa có trailler" // Đổi alt thành "Default Image" nếu item.name không tồn tại
+            className="object-fit-cover"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleVideoClick(item[column.key]);
+            }}
+            style={{ width: "60px", height: "45px", cursor: "pointer" }}
+          />
+        ) : (
+          <p>Chưa có trailler</p>
         );
       case "images":
         return item[column.key] ? (
@@ -267,6 +296,31 @@ const TableManagement = ({
             )}
           </span>
         );
+      case "genres":
+        return item.genres && item.genres.length > 0 ? (
+          item.genres.map((genre, index) => (
+            <Badge key={`genre-${index}`} variant="outline" className="mr-1">
+              {genre.genreName}
+            </Badge>
+          ))
+        ) : (
+          <span>Không có thể loại</span>
+        );
+
+      case "categories":
+        return item.categories && item.categories.length > 0 ? (
+          item.categories.map((category, index) => (
+            <Badge
+              key={`category-${index}`}
+              variant="secondary"
+              className="mr-1"
+            >
+              {category.categoryName}
+            </Badge>
+          ))
+        ) : (
+          <span>Không có danh mục</span>
+        );
 
       case "price":
         // eslint-disable-next-line no-case-declarations
@@ -406,8 +460,15 @@ const TableManagement = ({
     setShowModalImage(true);
   };
 
+  const handleVideoClick = (videoSrc) => {
+    // xử lý khi video trên bảng
+    setSelectedVideo(videoSrc);
+    setShowModalVideo(true);
+  };
+
   const handleCloseModalImage = () => setShowModalImage(false);
 
+  const handleCloseVideo = () => setShowModalVideo(false);
   // Mở modal thêm/sửa
   const handleShowModal = () => setShowModal(true);
 
@@ -523,6 +584,11 @@ const TableManagement = ({
         show={showModalImage}
         imageSrc={selectedImage}
         onClose={handleCloseModalImage}
+      />
+      <VideoModal
+        show={showModalVideo}
+        videoSrc={selectedVideo}
+        onClose={handleCloseVideo}
       />
     </div>
   );

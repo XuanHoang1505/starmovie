@@ -192,7 +192,7 @@ const GenreManagement = () => {
   return (
     <>
       <Helmet>
-        <title>Quản lý thể loại - Hight Star</title>
+        <title>Quản lý thể loại - Star Movie</title>
       </Helmet>
       {/* Hiển thị loader khi đang tải trang */}
       {loadingPage ? (

@@ -61,7 +61,43 @@ namespace starmovie.Services
             _logger.LogInformation($"Xóa ảnh kết quả: {result.Result}");
         }
 
-        // ➤ Hàm ExtractPublicId để lấy publicId từ URL ảnh Cloudinary
+        public async Task<string> UploadVideoAsync(IFormFile file, string prefix)
+        {
+            if (file == null || file.Length == 0)
+                throw new ArgumentException("File không hợp lệ!");
+
+            string uniqueFileName = $"{prefix}_{Guid.NewGuid()}";
+
+            using (var stream = file.OpenReadStream())
+            {
+                var uploadParams = new VideoUploadParams
+                {
+                    File = new FileDescription(file.FileName, stream),
+                    PublicId = uniqueFileName,
+                    UseFilename = true,
+                    UniqueFilename = true
+                };
+
+                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                _logger.LogInformation($"Video được tải lên thành công: {uploadResult.SecureUrl}");
+
+                return uploadResult.SecureUrl.ToString();
+            }
+        }
+
+        public async Task DeleteVideoAsync(string publicId)
+        {
+            var deletionParams = new DeletionParams(publicId)
+            {
+                ResourceType = ResourceType.Video // Sửa lỗi: Dùng enum thay vì string
+            };
+
+            var result = await _cloudinary.DestroyAsync(deletionParams);
+            _logger.LogInformation($"Xóa video kết quả: {result.Result}");
+        }
+
+
+
         public static string ExtractPublicId(string imageUrl)
         {
             if (string.IsNullOrEmpty(imageUrl))
@@ -83,6 +119,7 @@ namespace starmovie.Services
 
             return filePath.Split('.')[0]; // Nếu không có version, chỉ lấy tên file
         }
+
     }
 
 }

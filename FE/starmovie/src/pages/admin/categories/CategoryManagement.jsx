@@ -197,7 +197,7 @@ const CategoryManagement = () => {
   return (
     <>
       <Helmet>
-        <title>Quản lý phân loại - Hight Star</title>
+        <title>Quản lý phân loại - Star Movie</title>
       </Helmet>
       {/* Hiển thị loader khi đang tải trang */}
       {loadingPage ? (
