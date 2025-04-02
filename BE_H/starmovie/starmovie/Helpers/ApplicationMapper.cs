@@ -42,6 +42,20 @@ namespace starmovie.Helpers
                 .ForMember(dest => dest.MovieCategories, opt => opt.MapFrom((src, dest) =>
                     src.Categories.Select(c => new Movie_Category { MovieID = dest.MovieID, CategoryID = c.CategoryID }).ToList()));
 
+            CreateMap<Episode, EpisodeDTO>()
+             .ForMember(dest => dest.MovieTitle, opt => opt.MapFrom(src => src.Movie.Title))  // Lấy tên phim từ Movie
+             .ForMember(dest => dest.Duration, opt => opt.MapFrom(src => src.Duration.ToString(@"hh\:mm\:ss")));  // Chuyển TimeSpan thành string theo định dạng hh:mm:ss
+
+            // Ánh xạ từ EpisodeDTO sang Episode
+            CreateMap<EpisodeDTO, Episode>()
+                .ForMember(dest => dest.Duration, opt => opt.MapFrom(src => TimeSpan.Parse(src.Duration)))  // Chuyển string thành TimeSpan
+                .ForMember(dest => dest.Movie, opt => opt.Ignore())  // Bỏ qua ánh xạ Movie
+                .ForMember(dest => dest.Comments, opt => opt.Ignore())  // Bỏ qua Comments
+                .ForMember(dest => dest.WatchHistories, opt => opt.Ignore());  // Bỏ qua WatchHistories
+            //Ánh xạ     
+            CreateMap<MovieSlide, MovieSlideDTO>()
+                .ForMember(dest => dest.Movie, opt => opt.MapFrom(src => src.Movie)); // Ánh xạ Movie nếu cần
+            CreateMap<MovieSlideDTO, MovieSlide>();
         }
     }
 }

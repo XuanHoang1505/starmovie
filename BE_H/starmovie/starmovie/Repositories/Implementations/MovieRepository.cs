@@ -92,7 +92,7 @@ namespace starmovie.Repositories.Implementations
             // Cập nhật thông tin cơ bản
             _context.Entry(existingMovie).CurrentValues.SetValues(movie);
 
-            // ✅ Cập nhật danh sách thể loại (MovieGenres)
+            // Cập nhật danh sách thể loại (MovieGenres)
             var newGenres = movie.MovieGenres?.Select(g => g.GenreID).ToHashSet() ?? new HashSet<int>();
             existingMovie.MovieGenres.RemoveAll(g => !newGenres.Contains(g.GenreID));
             foreach (var genre in movie.MovieGenres ?? new List<Movie_Genre>())
@@ -101,7 +101,7 @@ namespace starmovie.Repositories.Implementations
                     existingMovie.MovieGenres.Add(new Movie_Genre { MovieID = movie.MovieID, GenreID = genre.GenreID });
             }
 
-            // ✅ Cập nhật danh sách danh mục (MovieCategories)
+            // Cập nhật danh sách danh mục (MovieCategories)
             var newCategories = movie.MovieCategories?.Select(c => c.CategoryID).ToHashSet() ?? new HashSet<int>();
             existingMovie.MovieCategories.RemoveAll(c => !newCategories.Contains(c.CategoryID));
             foreach (var category in movie.MovieCategories ?? new List<Movie_Category>())

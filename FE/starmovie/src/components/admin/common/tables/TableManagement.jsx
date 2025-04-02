@@ -153,6 +153,21 @@ const TableManagement = ({
         ) : (
           <p>Chưa có trailler</p>
         );
+      case "movieUrl":
+        return item[column.key] ? (
+          <img
+            src={defaultVideo} // Nếu item[column.key] không có, hiển thị ảnh mặc định
+            alt="Chưa có trailler" // Đổi alt thành "Default Image" nếu item.name không tồn tại
+            className="object-fit-cover"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleVideoClick(item[column.key]);
+            }}
+            style={{ width: "60px", height: "45px", cursor: "pointer" }}
+          />
+        ) : (
+          <p>Chưa có trailler</p>
+        );
       case "images":
         return item[column.key] ? (
           <div
