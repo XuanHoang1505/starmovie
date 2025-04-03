@@ -7,6 +7,7 @@ import UserManagement from "./admin/users/UserManagement";
 import CategoryManagement from "./admin/categories/CategoryManagement";
 import ActorManagement from "./admin/actors/ActorManagement";
 import EpisodeManagement from "./admin/episodes/EpisodeManagement";
+import MovieSlideManagement from "./admin/movieSlides/MovieSlideManagement";
 import Home from "./admin/home/Home";
 
 export {
@@ -20,4 +21,5 @@ export {
   CategoryManagement,
   ActorManagement,
   EpisodeManagement,
+  MovieSlideManagement,
 };

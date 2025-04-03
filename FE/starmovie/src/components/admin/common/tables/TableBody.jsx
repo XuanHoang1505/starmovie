@@ -15,6 +15,7 @@ const TableBody = ({
   handleShowConfirmModal,
   onViewDetail,
 }) => {
+  console.log(currentData);
   return (
     <div className="table__wrapper row m-0">
       <div className="light__text table-responsive col-12 p-0 custom-scrollbar">

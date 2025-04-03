@@ -1,9 +1,8 @@
 import React from "react";
 import CIcon from "@coreui/icons-react";
+import { TfiLayoutSlider } from "react-icons/tfi";
+import { RiMovie2AiLine } from "react-icons/ri";
 import {
-  cilExternalLink,
-  cilNotes,
-  cilPuzzle,
   cilSpeedometer,
   cilHome,
   cilMovie,
@@ -50,7 +49,7 @@ const _nav = [
         component: CNavItem,
         name: "Phim",
         to: "/movies/movies",
-        icon: <CIcon icon={cilMovie} customClassName="nav-icon" />,
+        icon: <RiMovie2AiLine className="nav-icon" />,
       },
       {
         component: CNavItem,
@@ -59,6 +58,12 @@ const _nav = [
         icon: <CIcon icon={cilMediaPause} customClassName="nav-icon" />,
       },
     ],
+  },
+  {
+    component: CNavItem,
+    name: "Slide",
+    to: "/movieSlides",
+    icon: <TfiLayoutSlider className="nav-icon" />,
   },
   {
     component: CNavItem,

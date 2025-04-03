@@ -25,15 +25,7 @@ namespace starmovie.Controllers.admin
         {
             var movieSlides = await _movieSlideRepository.GetAllMovieSlidesAsync();
 
-            // Lấy poster của phim từ Movie
-            var movieSlideDTOs = movieSlides.Select(slide => new MovieSlideDTO
-            {
-                SlideID = slide.SlideID,
-                Position = slide.Position,
-                MovieID = slide.MovieID,
-            });
-
-            return Ok(movieSlideDTOs);
+            return Ok(_mapper.Map<IEnumerable<MovieSlideDTO>>(movieSlides).ToList());
         }
 
         [HttpGet("{id}")]
@@ -42,14 +34,7 @@ namespace starmovie.Controllers.admin
             var movieSlide = await _movieSlideRepository.GetMovieSlideByIdAsync(id);
             if (movieSlide == null) return NotFound();
 
-            var movieSlideDTO = new MovieSlideDTO
-            {
-                SlideID = movieSlide.SlideID,
-                Position = movieSlide.Position,
-                MovieID = movieSlide.MovieID,
-            };
-
-            return Ok(movieSlideDTO);
+            return Ok(_mapper.Map<MovieSlideDTO>(movieSlide));
         }
 
         [HttpPost]
@@ -90,6 +75,17 @@ namespace starmovie.Controllers.admin
 
             await _movieSlideRepository.DeleteMovieSlideAsync(id);
             return NoContent();
+        }
+
+        [HttpGet("movieSlide/{movieId}")]
+        public async Task<ActionResult<IEnumerable<MovieSlideDTO>>> GetMovieSlideByMovieId(int movieId)
+        {
+            var slides = await _movieSlideRepository.GetMovieSlidesByMovieIdAsync(movieId);
+            if (slides == null || !slides.Any())
+            {
+                return NotFound(new { message = "Không tìm thấy slide cho bộ phim với ID này" });
+            }
+            return Ok(_mapper.Map<IEnumerable<MovieSlideDTO>>(slides));
         }
     }
 }

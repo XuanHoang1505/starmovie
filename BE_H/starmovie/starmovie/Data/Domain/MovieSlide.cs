@@ -11,6 +11,6 @@ namespace starmovie.Data.Domain
         public int Position { get; set; }
         public int MovieID { get; set; }
         [ForeignKey("MovieID")]
-        public Movie Movie { get; set; }
+        public Movie? Movie { get; set; }
     }
 }

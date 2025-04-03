@@ -17,7 +17,9 @@ namespace starmovie.Repositories.Implementations
         }
         public async Task<IEnumerable<MovieSlide>> GetAllMovieSlidesAsync()
         {
-            return await _context.MovieSlides.ToListAsync();
+            return await _context.MovieSlides
+                         .Include(ms => ms.Movie) // Load luôn thông tin Movie
+                         .ToListAsync();
         }
 
         public async Task AddMovieSlideAsync(MovieSlide slide)
@@ -54,7 +56,9 @@ namespace starmovie.Repositories.Implementations
 
         public async Task<MovieSlide> GetMovieSlideByIdAsync(int id)
         {
-            return await _context.MovieSlides.FindAsync(id);
+            return await _context.MovieSlides
+                         .Include(ms => ms.Movie) // Load luôn Movie khi lấy một Slide
+                         .FirstOrDefaultAsync(ms => ms.SlideID == id);
         }
 
 
@@ -75,6 +79,7 @@ namespace starmovie.Repositories.Implementations
             }
             var slides = await _context.MovieSlides.
                   Where(s => s.MovieID == id).
+                  Include(s => s.Movie).
                   ToListAsync();
 
             return slides;

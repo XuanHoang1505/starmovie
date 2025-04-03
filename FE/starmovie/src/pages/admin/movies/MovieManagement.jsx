@@ -576,13 +576,13 @@ const MovieManagement = () => {
               Đánh giá <span className="text-danger">(*)</span>
             </Form.Label>
             <Form.Control
-              type="text"
+              type="number"
               name="rating"
               value={formData.rating}
-              maxLength={100}
+              min="1"
+              max="5"
               onChange={(e) => handleInputChange("rating", e.target.value)}
               isInvalid={!!errorFields.rating}
-              placeholder="Nhập số sao đánh giá"
               required
             />
             <Form.Control.Feedback type="invalid">

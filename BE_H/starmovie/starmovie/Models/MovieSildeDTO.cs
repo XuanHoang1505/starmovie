@@ -11,6 +11,6 @@ namespace starmovie.Models
         [JsonPropertyName("movieId")]
         public int MovieID { get; set; }
         [JsonPropertyName("movie")]
-        public MovieDTO Movie { get; set; }
+        public MovieDTO? Movie { get; set; }
     }
 }

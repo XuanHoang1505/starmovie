@@ -52,9 +52,9 @@ namespace starmovie.Helpers
                 .ForMember(dest => dest.Movie, opt => opt.Ignore())  // Bỏ qua ánh xạ Movie
                 .ForMember(dest => dest.Comments, opt => opt.Ignore())  // Bỏ qua Comments
                 .ForMember(dest => dest.WatchHistories, opt => opt.Ignore());  // Bỏ qua WatchHistories
-            //Ánh xạ     
+                                                                               //Ánh xạ     
             CreateMap<MovieSlide, MovieSlideDTO>()
-                .ForMember(dest => dest.Movie, opt => opt.MapFrom(src => src.Movie)); // Ánh xạ Movie nếu cần
+                .ForMember(dest => dest.Movie, opt => opt.MapFrom(src => src.Movie));
             CreateMap<MovieSlideDTO, MovieSlide>();
         }
     }
