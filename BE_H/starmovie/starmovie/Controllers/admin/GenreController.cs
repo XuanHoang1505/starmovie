@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using starmovie.Data.Domain;
 using starmovie.Models;
@@ -34,6 +35,7 @@ namespace starmovie.Controllers.admin
             return Ok(_mapper.Map<GenreDTO>(genre));
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         public async Task<ActionResult> CreateGenre([FromBody] GenreDTO genreDto)
         {
@@ -45,7 +47,7 @@ namespace starmovie.Controllers.admin
             return CreatedAtAction(nameof(GetGenre), new { id = genre.GenreID }, _mapper.Map<GenreDTO>(genre));
         }
 
-
+        [Authorize(Roles = "ADMIN")]
         [HttpPut("{id}")]
         public async Task<ActionResult<GenreDTO>> UpdateGenre(int id, [FromBody] GenreDTO genreDto)
         {
@@ -63,7 +65,7 @@ namespace starmovie.Controllers.admin
             return Ok(updatedGenreDto);
         }
 
-
+        [Authorize(Roles = "ADMIN")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteGenre(int id)
         {

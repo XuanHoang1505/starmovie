@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using starmovie.Data;
 
@@ -11,9 +12,11 @@ using starmovie.Data;
 namespace starmovie.Migrations
 {
     [DbContext(typeof(MovieContext))]
-    partial class MovieContextModelSnapshot : ModelSnapshot
+    [Migration("20250405022442_AddUserColumns")]
+    partial class AddUserColumns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,10 +166,11 @@ namespace starmovie.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Avatar")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<DateTime?>("BirthDate")
+                    b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -184,11 +188,9 @@ namespace starmovie.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<bool?>("Gender")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<DateTime?>("LastLogin")
-                        .HasColumnType("datetime(6)");
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("tinyint(1)");
@@ -208,16 +210,12 @@ namespace starmovie.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("longtext");
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("varchar(15)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("RefreshToken")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("RefreshTokenExpiryTime")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime(6)");
@@ -234,6 +232,9 @@ namespace starmovie.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
+
+                    b.Property<DateTime>("lastLogin")
+                        .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
 

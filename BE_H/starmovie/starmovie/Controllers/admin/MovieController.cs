@@ -5,6 +5,7 @@ using starmovie.Data.Domain;
 using starmovie.Models;
 using starmovie.Repositories.Interfaces;
 using starmovie.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace starmovie.Controllers.admin
 {
@@ -37,7 +38,7 @@ namespace starmovie.Controllers.admin
             if (movie == null) return NotFound();
             return Ok(_mapper.Map<MovieDTO>(movie));
         }
-
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         public async Task<ActionResult> CreateMovie([FromForm] MovieCreateUpdateDTO movieCreateDTO)
         {
@@ -124,7 +125,7 @@ namespace starmovie.Controllers.admin
             };
             return CreatedAtAction(nameof(GetMovie), new { id = movieWithDetails.MovieID }, movieDtoResponse);
         }
-
+        [Authorize(Roles = "ADMIN")]
         [HttpPut("{id}")]
         public async Task<ActionResult<MovieDTO>> UpdateMovie(int id, [FromForm] MovieCreateUpdateDTO updateMovieDTO)
         {
@@ -183,7 +184,7 @@ namespace starmovie.Controllers.admin
             return Ok(updatedMovie);
         }
 
-
+        [Authorize(Roles = "ADMIN")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteMovie(int id)
         {

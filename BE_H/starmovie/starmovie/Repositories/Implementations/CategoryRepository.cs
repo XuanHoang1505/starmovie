@@ -1,14 +1,15 @@
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using starmovie.Data;
+using starmovie.Data.Domain;
+using starmovie.Models;
+using starmovie.Repositories.Interfaces;
+using StarMovie.Utils.Exceptions;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace starmovie.Repositories.Implementations
 {
-    using AutoMapper;
-    using Microsoft.EntityFrameworkCore;
-    using starmovie.Data;
-    using starmovie.Data.Domain;
-    using starmovie.Models;
-    using starmovie.Repositories.Interfaces;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-
     public class CategoryRepository : ICategoryRepository
     {
         private readonly MovieContext _context;
@@ -17,6 +18,7 @@ namespace starmovie.Repositories.Implementations
         {
             _context = context;
         }
+
         public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
         {
             return await _context.Categories.ToListAsync();
@@ -26,7 +28,12 @@ namespace starmovie.Repositories.Implementations
         {
             if (category == null || string.IsNullOrWhiteSpace(category.CategoryName))
             {
-                throw new ArgumentException("Tên danh mục không được để trống.");
+                throw new AppException(ErrorCode.InvalidInput, "Tên danh mục không được để trống."); // 3002 InvalidInput
+            }
+
+            if (await _context.Categories.AnyAsync(c => c.CategoryName == category.CategoryName))
+            {
+                throw new AppException(ErrorCode.ConflictError, "Danh mục đã tồn tại!"); // 409 ConflictError
             }
 
             _context.Categories.Add(category);
@@ -41,13 +48,12 @@ namespace starmovie.Repositories.Implementations
         public async Task DeleteCategoryAsync(int id)
         {
             var category = await _context.Categories.FindAsync(id);
-            if (category != null)
-            {
-                _context.Categories.Remove(category);
-                await _context.SaveChangesAsync();
-            }
-        }
+            if (category == null)
+                throw new AppException(ErrorCode.ResourceNotFound, "Không tìm thấy danh mục!"); // 4001 ResourceNotFound
 
+            _context.Categories.Remove(category);
+            await _context.SaveChangesAsync();
+        }
 
         public async Task<List<Category>> GetCategoriesPagedAsync(int pageNumber, int pageSize)
         {
@@ -64,7 +70,11 @@ namespace starmovie.Repositories.Implementations
 
         public async Task<Category> GetCategoryByIdAsync(int id)
         {
-            return await _context.Categories.FindAsync(id);
+            var category = await _context.Categories.FindAsync(id);
+            if (category == null)
+                throw new AppException(ErrorCode.ResourceNotFound, "Không tìm thấy danh mục!"); // 4001 ResourceNotFound
+
+            return category;
         }
 
         public async Task<int> GetTotalCategoriesAsync()

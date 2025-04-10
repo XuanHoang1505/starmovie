@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using starmovie.Data;
 
@@ -11,9 +12,11 @@ using starmovie.Data;
 namespace starmovie.Migrations
 {
     [DbContext(typeof(MovieContext))]
-    partial class MovieContextModelSnapshot : ModelSnapshot
+    [Migration("20250405150134_UpdateNullable")]
+    partial class UpdateNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -184,8 +187,8 @@ namespace starmovie.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<bool?>("Gender")
-                        .HasColumnType("tinyint(1)");
+                    b.Property<string>("Gender")
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime?>("LastLogin")
                         .HasColumnType("datetime(6)");

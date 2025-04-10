@@ -4,12 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using starmovie.Configurations;
 using starmovie.Data;
-using starmovie.Repositories;
 using starmovie.Repositories.Implementations;
 using starmovie.Repositories.Interfaces;
 using starmovie.Services;
+using starmovie.Models;
 using System.Text;
 using System.Text.Json.Serialization;
+using StarMovie.Utils.Exceptions;
+using starmovie.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +28,7 @@ builder.Services.AddDbContext<MovieContext>(options =>
     ).EnableSensitiveDataLogging()
 );
 // Cấu hình Identity
-builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<MovieContext>()
     .AddDefaultTokenProviders();
 
@@ -65,18 +67,33 @@ builder.Services.AddAuthorization();
 builder.Services.AddAutoMapper(typeof(Program));
 
 // Đăng kí Api controller
-builder.Services.AddScoped<IBookRepository, BookRepository>();
-builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IActorRepository, ActorRepository>();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<IEpisodeRepository, EpisodeRepository>();
 builder.Services.AddScoped<IMovieSlideRepository, MovieSlideRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 // Đăng ký CloudinaryService
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 builder.Services.AddSingleton<CloudinaryService>();
+
+// Đăng ký dịch vụ JWT
+builder.Services.AddScoped<JwtTokenProvider>();
+
+// Đăng ký dịch vụ Email
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddTransient<ISendMailService, SendMailService>();
+
+// Đăng ký dịch vụ OTP
+builder.Services.AddTransient<OtpService>();
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 
 
 builder.Services.AddCors(options =>
@@ -102,6 +119,33 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
 });
 
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Description = "Nhập JWT Token ở đây (Bearer <your-token>)"
+    });
+    options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -111,16 +155,20 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+app.UseCors("AllowAll");
+
 // Thêm Authentication Middleware
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapIdentityApi<ApplicationUser>();
+// Thêm Middleware xử lý lỗi
+app.UseMiddleware<ExceptionMiddleware>();
+
 
 app.UseHttpsRedirection();
 app.MapControllers();
 
-app.UseCors("AllowAll");
 
 
 app.Run();

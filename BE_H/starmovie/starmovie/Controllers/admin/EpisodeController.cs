@@ -5,6 +5,7 @@ using starmovie.Data.Domain;
 using starmovie.Models;
 using starmovie.Repositories.Interfaces;
 using starmovie.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace starmovie.Controllers.admin
 {
@@ -38,6 +39,7 @@ namespace starmovie.Controllers.admin
             return Ok(_mapper.Map<EpisodeDTO>(episode));
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         public async Task<ActionResult> CreateEpisode([FromForm] EpisodeCreateUpdateDTO episodeCreateDTO)
         {
@@ -84,6 +86,7 @@ namespace starmovie.Controllers.admin
 
 
 
+        [Authorize(Roles = "ADMIN")]
         [HttpPut("{id}")]
         public async Task<ActionResult<EpisodeDTO>> UpdateEpisode(int id, [FromForm] EpisodeCreateUpdateDTO episodeUpdateDTO)
         {
@@ -146,6 +149,7 @@ namespace starmovie.Controllers.admin
         }
 
 
+        [Authorize(Roles = "ADMIN")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteEpisode(int id)
         {

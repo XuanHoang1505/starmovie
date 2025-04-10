@@ -10,6 +10,15 @@ export function formatDateToDMY(inputDate) {
   return `${day}/${month}/${year}`;
 }
 
+export const formatToDateInput = (dateStr) => {
+  const date = new Date(dateStr);
+  // Kiểm tra nếu là ngày hợp lệ
+  if (!isNaN(date.getTime())) {
+    return date.toISOString().split("T")[0]; // "2025-04-03"
+  }
+  return "";
+};
+
 export function formatDateTimeToISO(inputDateTime) {
   if (!inputDateTime) return "";
   const [date, time] = inputDateTime.split(" ");

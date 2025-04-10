@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using starmovie.Data;
 using starmovie.Data.Domain;
 using starmovie.Models;
 
@@ -56,6 +57,9 @@ namespace starmovie.Helpers
             CreateMap<MovieSlide, MovieSlideDTO>()
                 .ForMember(dest => dest.Movie, opt => opt.MapFrom(src => src.Movie));
             CreateMap<MovieSlideDTO, MovieSlide>();
+            CreateMap<ApplicationUser, UserDTO>()
+                .ForMember(dest => dest.Role, opt => opt.Ignore()); // Lấy Role riêng
+            CreateMap<UserDTO, ApplicationUser>();
         }
     }
 }

@@ -411,7 +411,7 @@ const EpisodeManagement = () => {
               Phim <span className="text-danger">(*)</span>
             </Form.Label>
             <Select
-              options={listMovieOption} // Danh sách các tùy chọn loại sản phẩm
+              options={listMovieOption}
               value={listMovieOption.find(
                 (option) => option.value === formData.movieId
               )}

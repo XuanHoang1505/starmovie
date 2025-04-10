@@ -4,6 +4,7 @@ using System.Text.Json;
 using starmovie.Data.Domain;
 using starmovie.Models;
 using starmovie.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace starmovie.Controllers.admin
 {
@@ -36,7 +37,7 @@ namespace starmovie.Controllers.admin
 
             return Ok(_mapper.Map<MovieSlideDTO>(movieSlide));
         }
-
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         public async Task<ActionResult> CreateMovieSlide([FromBody] MovieSlideDTO movieSlideDto)
         {
@@ -52,6 +53,7 @@ namespace starmovie.Controllers.admin
             return CreatedAtAction(nameof(GetMovieSlide), new { id = movieSlideEntity.SlideID }, movieSlideDto);
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpPut("{id}")]
         public async Task<ActionResult<MovieSlideDTO>> UpdateMovieSlide(int id, [FromBody] MovieSlideDTO movieSlideDto)
         {
@@ -67,6 +69,7 @@ namespace starmovie.Controllers.admin
             return Ok(_mapper.Map<MovieSlideDTO>(updatedMovieSlide));
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteMovieSlide(int id)
         {
