@@ -7,7 +7,6 @@ import routes from "../../../routes/admin/adminRoutes";
 const AppContent = () => {
   const { colorMode } = useColorModes(); // Lấy chế độ sáng/tối
 
-
   return (
     <CContainer className="px-4" fluid>
       <Suspense fallback={<CSpinner color="primary" />}>

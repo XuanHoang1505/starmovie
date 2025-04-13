@@ -1,5 +1,5 @@
 import axiosInstance from "../../config/axiosInstance"; // Axios config sẵn baseURL và headers
-import handleErrorResponse from "../../common/utils/ErrorHandler";
+import handleErrorResponse from "../../utils/errors/ErrorHandler";
 
 const AUTH_URL = "/auth";
 
@@ -47,7 +47,7 @@ export const refreshToken = async () => {
       {},
       {
         headers: {
-          Authorization: `${refreshToken}`,
+          Authorization: refreshToken,
         },
       }
     );

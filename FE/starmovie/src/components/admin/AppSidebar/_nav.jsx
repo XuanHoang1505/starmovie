@@ -19,14 +19,8 @@ import { CNavGroup, CNavItem, CNavTitle } from "@coreui/react";
 const _nav = [
   {
     component: CNavItem,
-    name: "Trang chủ",
-    to: "/",
-    icon: <CIcon icon={cilHome} customClassName="nav-icon" size="sm" />,
-  },
-  {
-    component: CNavItem,
     name: "Bảng điều khiển",
-    to: "/dashboard",
+    to: "dashboard",
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
   },
   {
@@ -36,63 +30,63 @@ const _nav = [
   {
     component: CNavItem,
     name: "Diễn Viên",
-    to: "/actors",
+    to: "actors",
     icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
   },
   {
     component: CNavGroup,
     name: "Kho phim",
-    to: "/movies",
-    icon: <CIcon icon={cilMovie} customClassName="nav-icon" />,
+    to: "movies",
+    icon: <RiMovie2AiLine className="nav-icon" />,
     items: [
       {
         component: CNavItem,
         name: "Phim",
-        to: "/movies/movies",
-        icon: <RiMovie2AiLine className="nav-icon" />,
+        to: "movies/movies",
+        // icon: <RiMovie2AiLine className="nav-icon" />,
       },
       {
         component: CNavItem,
         name: "Tập phim",
-        to: "/movies/episodes",
-        icon: <CIcon icon={cilMediaPause} customClassName="nav-icon" />,
+        to: "movies/episodes",
+        // icon: <CIcon icon={cilMediaPause} customClassName="nav-icon" size="sm"/>,
       },
     ],
   },
   {
     component: CNavItem,
     name: "Slide",
-    to: "/movieSlides",
+    to: "movieSlides",
     icon: <TfiLayoutSlider className="nav-icon" />,
   },
   {
     component: CNavItem,
     name: "Thể loại",
-    to: "/genres",
+    to: "genres",
     icon: <i className="bi bi-layout-text-sidebar-reverse nav-icon"></i>,
   },
   {
     component: CNavItem,
     name: "Danh mục",
-    to: "/categories",
+    to: "categories",
     icon: <CIcon icon={cilList} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: "Người dùng",
-    to: "/users",
+    to: "users",
     icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: "Bình luận",
-    to: "/comments",
+    to: "comments",
     icon: <CIcon icon={cilCommentBubble} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: "Đánh giá",
-    to: "/reviews",
+    to: "reviews",
     icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
   },
 ];

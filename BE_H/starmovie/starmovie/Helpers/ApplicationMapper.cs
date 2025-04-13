@@ -60,6 +60,12 @@ namespace starmovie.Helpers
             CreateMap<ApplicationUser, UserDTO>()
                 .ForMember(dest => dest.Role, opt => opt.Ignore()); // Lấy Role riêng
             CreateMap<UserDTO, ApplicationUser>();
+            CreateMap<Review, ReviewDTO>()
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.FullName))
+                .ForMember(dest => dest.MovieTitle, opt => opt.MapFrom(src => src.Movie.Title));
+            CreateMap<ReviewDTO, Review>()
+                .ForMember(dest => dest.User, opt => opt.Ignore())   // Không map navigation
+                .ForMember(dest => dest.Movie, opt => opt.Ignore());
         }
     }
 }

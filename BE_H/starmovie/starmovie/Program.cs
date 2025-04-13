@@ -58,7 +58,22 @@ builder.Services.AddAuthentication(options =>
         ValidAudience = builder.Configuration["JWT:ValidAudience"],
         ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes
-            (builder.Configuration["JWT:Secret"]))
+            (builder.Configuration["JWT:Secret"])),
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero
+    };
+    options.Events = new JwtBearerEvents
+    {
+        OnTokenValidated = context =>
+        {
+            Console.WriteLine("✅ Token hợp lệ!");
+            return Task.CompletedTask;
+        },
+        OnAuthenticationFailed = context =>
+        {
+            Console.WriteLine("❌ Token không hợp lệ: " + context.Exception.Message);
+            return Task.CompletedTask;
+        }
     };
 
 });
@@ -74,6 +89,7 @@ builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<IEpisodeRepository, EpisodeRepository>();
 builder.Services.AddScoped<IMovieSlideRepository, MovieSlideRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 
 // Đăng ký CloudinaryService
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
@@ -89,13 +105,6 @@ builder.Services.AddTransient<ISendMailService, SendMailService>();
 // Đăng ký dịch vụ OTP
 builder.Services.AddTransient<OtpService>();
 
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-    });
-
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",
@@ -103,7 +112,8 @@ builder.Services.AddCors(options =>
         {
             policy.AllowAnyOrigin()
                   .AllowAnyMethod()
-                  .AllowAnyHeader();
+                  .AllowAnyHeader()
+                  .WithExposedHeaders("Authorization");
         });
 });
 builder.Services.AddControllers()
@@ -111,6 +121,7 @@ builder.Services.AddControllers()
     {
         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
         options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 //tránh vòng lặp
 

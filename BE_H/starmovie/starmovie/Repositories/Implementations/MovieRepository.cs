@@ -149,5 +149,20 @@ namespace starmovie.Repositories.Implementations
         {
             return await _context.Movies.CountAsync();
         }
+        public async Task<List<MovieRatingDTO>> GetTopRatedMoviesAsync(int topN)
+        {
+            return await _context.Reviews
+                .Where(r => r.Movie != null)
+                .GroupBy(r => new { r.MovieID, r.Movie.Title })
+                .Select(g => new MovieRatingDTO
+                {
+                    MovieID = g.Key.MovieID,
+                    Title = g.Key.Title,
+                    AverageRating = g.Average(r => r.Rating)
+                })
+                .OrderByDescending(x => x.AverageRating)
+                .Take(topN)
+                .ToListAsync();
+        }
     }
 }

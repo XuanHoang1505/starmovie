@@ -13,5 +13,6 @@ namespace starmovie.Repositories.Interfaces
         Task<bool> MovieExistsAsync(int id);
         Task<List<MovieDTO>> GetMoviesPagedAsync(int pageNumber, int pageSize);
         Task<int> GetTotalMoviesAsync();
+        Task<List<MovieRatingDTO>> GetTopRatedMoviesAsync(int topN);
     }
 }

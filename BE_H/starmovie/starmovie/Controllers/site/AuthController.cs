@@ -33,6 +33,10 @@ namespace starmovie.Controllers
             var response = await _userRepository.LoginUserAsync(loginDTO);
             if (response?.AccessToken == null)
                 return Unauthorized("Sai thông tin đăng nhập.");
+
+            // Thêm AccessToken vào header
+            Response.Headers.Add("Authorization", $"Bearer {response.AccessToken}");
+
             return Ok(response);
         }
 
@@ -110,15 +114,19 @@ namespace starmovie.Controllers
         }
 
         // Làm mới token - nếu bạn có thêm hàm này trong JwtTokenProvider
-
+        [Authorize]
         [HttpPost("refresh-token")]
-        public async Task<IActionResult> RefreshToken([FromBody] string refreshToken)
+        public async Task<IActionResult> RefreshToken()
         {
+            var refreshToken = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
             var newAccessToken = await _jwtTokenProvider.RefreshTokenAsync(refreshToken, _userRepository);
+
             if (newAccessToken != null)
                 return Ok(new { AccessToken = newAccessToken });
+
             return Unauthorized("Refresh token không hợp lệ hoặc đã hết hạn.");
         }
+
 
         // Đăng xuất
         [Authorize]

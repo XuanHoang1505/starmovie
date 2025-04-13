@@ -10,9 +10,14 @@ namespace StarMovie.Utils.Exceptions
         InvalidLogin = 1001,
 
         /// <summary>
-        /// Người dùng không có quyền truy cập tài nguyên này.
+        /// Người dùng không có quyền truy cập tài nguyên này (chưa đăng nhập).
         /// </summary>
         UnauthorizedAccess = 1002,
+
+        /// <summary>
+        /// Người dùng đã đăng nhập nhưng không có quyền thực hiện hành động.
+        /// </summary>
+        Forbidden = 1003,
 
         // 🔹 Lỗi tài khoản và người dùng (User & Account Errors)
 
@@ -36,7 +41,22 @@ namespace StarMovie.Utils.Exceptions
         /// </summary>
         AccountLocked = 2004,
 
-        // Lỗi hệ thống và máy chủ (System Errors)
+        /// <summary>
+        /// Không tìm thấy đánh giá.
+        /// </summary>
+        ReviewNotFound = 2005,
+
+        /// <summary>
+        /// Tài khoản chưa xác minh email hoặc số điện thoại.
+        /// </summary>
+        AccountNotVerified = 2006,
+
+        /// <summary>
+        /// Mật khẩu cũ không đúng khi thay đổi mật khẩu.
+        /// </summary>
+        IncorrectOldPassword = 2007,
+
+        // 🔹 Lỗi hệ thống và máy chủ (System Errors)
 
         /// <summary>
         /// Lỗi máy chủ nội bộ, thường là do lỗi logic hoặc kết nối database thất bại.
@@ -48,7 +68,7 @@ namespace StarMovie.Utils.Exceptions
         /// </summary>
         ServiceUnavailable = 5001,
 
-        // Lỗi dữ liệu không hợp lệ (Validation Errors)
+        // 🔹 Lỗi dữ liệu không hợp lệ (Validation Errors)
 
         /// <summary>
         /// Định dạng email không hợp lệ (ví dụ: thiếu @ hoặc .com).
@@ -65,14 +85,48 @@ namespace StarMovie.Utils.Exceptions
         /// </summary>
         PasswordTooWeak = 3003,
 
-        // Lỗi tài nguyên không tìm thấy (Resource Not Found Errors)
+        /// <summary>
+        /// Tên người dùng không hợp lệ (quá ngắn, chứa ký tự đặc biệt...).
+        /// </summary>
+        InvalidUsername = 3004,
+
+        /// <summary>
+        /// Dữ liệu ngày tháng không hợp lệ hoặc nằm ngoài phạm vi cho phép.
+        /// </summary>
+        InvalidDate = 3005,
+
+        // 🔹 Lỗi tài nguyên không tìm thấy (Resource Not Found Errors)
 
         /// <summary>
         /// Không tìm thấy tài nguyên yêu cầu, có thể là một URL không hợp lệ hoặc dữ liệu đã bị xóa.
         /// </summary>
         ResourceNotFound = 4001,
 
-        // Lỗi xung đột, thường xảy ra khi có sự cố với dữ liệu (ví dụ: cố gắng tạo một bản ghi đã tồn tại).
+        /// <summary>
+        /// Không tìm thấy phim.
+        /// </summary>
+        MovieNotFound = 4002,
+
+        /// <summary>
+        /// Không tìm thấy vai trò người dùng.
+        /// </summary>
+        RoleNotFound = 4003,
+
+        // 🔹 Lỗi xung đột dữ liệu (Conflict Errors)
+
+        /// <summary>
+        /// Dữ liệu đã tồn tại, không thể tạo bản ghi trùng lặp.
+        /// </summary>
         ConflictError = 409,
+
+        /// <summary>
+        /// Người dùng đã đánh giá bộ phim này rồi.
+        /// </summary>
+        ReviewAlreadyExists = 4091,
+
+        /// <summary>
+        /// Email xác minh đã được sử dụng hoặc hết hạn.
+        /// </summary>
+        VerificationTokenInvalidOrExpired = 4092
     }
 }

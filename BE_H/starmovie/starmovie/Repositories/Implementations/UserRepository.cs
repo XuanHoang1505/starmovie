@@ -194,7 +194,7 @@ namespace starmovie.Repositories.Implementations
 
                 var roles = await _userManager.GetRolesAsync(user);
                 var accessToken = _jwtTokenProvider.GenerateToken(user.UserName, roles.ToList(), user.Id);
-                var refreshToken = _jwtTokenProvider.GenerateRefreshToken();
+                var refreshToken = "Bearer " + _jwtTokenProvider.GenerateRefreshToken();
 
                 user.RefreshToken = refreshToken;
                 user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(10);
@@ -207,6 +207,7 @@ namespace starmovie.Repositories.Implementations
                     FullName = user.FullName,
                     Email = user.Email,
                     Avatar = user.Avatar,
+                    Role = roles.FirstOrDefault() ?? "USER",
                     AccessToken = accessToken,
                     RefreshToken = refreshToken
                 };

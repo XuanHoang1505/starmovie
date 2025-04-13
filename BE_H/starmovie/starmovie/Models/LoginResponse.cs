@@ -15,6 +15,8 @@ namespace starmovie.Models
         public string Email { get; set; }
         [JsonPropertyName("avatar")]
         public string Avatar { get; set; }
+        [JsonPropertyName("role")]
+        public string Role { get; set; }
 
         [JsonPropertyName("accessToken")]
         public string AccessToken { get; set; }

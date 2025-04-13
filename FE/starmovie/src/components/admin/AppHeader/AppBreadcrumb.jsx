@@ -33,9 +33,7 @@ const AppBreadcrumb = () => {
 
   return (
     <CBreadcrumb className="my-0">
-      {currentLocation !== "/" && (
-        <CBreadcrumbItem href="/">Trang chủ</CBreadcrumbItem>
-      )}
+      <CBreadcrumbItem href="/">Trang chủ</CBreadcrumbItem>
       {breadcrumbs.map((breadcrumb, index) => {
         return (
           <CBreadcrumbItem

@@ -229,5 +229,14 @@ namespace starmovie.Controllers.admin
                 Data = moviesDTO
             });
         }
+        [HttpGet("top-rated")]
+        public async Task<ActionResult<List<MovieRatingDTO>>> GetTopRatedMovies([FromQuery] int topN = 5)
+        {
+            if (topN <= 0)
+                return BadRequest("topN phải lớn hơn 0.");
+
+            var result = await _movieRepository.GetTopRatedMoviesAsync(topN);
+            return Ok(result);
+        }
     }
 }
