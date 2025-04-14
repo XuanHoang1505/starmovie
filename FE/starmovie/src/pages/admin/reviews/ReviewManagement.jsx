@@ -225,6 +225,8 @@ const ReviewManagement = () => {
         const { id, ...rest } = formData; // loại bỏ id khỏi formData
         const newReview = await ReviewService.createReview(rest);
 
+        fetchReviewData();
+
         // Cập nhật mảng reviewData với item vừa được thêm
         setReviewData([...reviewData, newReview]);
         toast.success("Thêm mới đánh giá thành công!");

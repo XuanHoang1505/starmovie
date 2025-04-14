@@ -19,9 +19,7 @@ export const UserProvider = ({ children }) => {
   // Hàm để cập nhật thông tin người dùng và lưu vào localStorage
   const updateUser = (userDetail) => {
     setUser(userDetail);
-    console.log("userDetail_2", userDetail);
     localStorage.setItem("userDetail", JSON.stringify(userDetail));
-    console.log("userDetail_3", userDetail);
   };
 
   return (

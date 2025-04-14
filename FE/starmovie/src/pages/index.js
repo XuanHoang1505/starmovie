@@ -8,6 +8,8 @@ import CategoryManagement from "./admin/categories/CategoryManagement";
 import ActorManagement from "./admin/actors/ActorManagement";
 import EpisodeManagement from "./admin/episodes/EpisodeManagement";
 import MovieSlideManagement from "./admin/movieSlides/MovieSlideManagement";
+import VipTypeManagement from "./admin/vipTypes/VipTypeManagement";
+import VipManagement from "./admin/vips/VipManagement";
 import Home from "./admin/home/Home";
 
 export {
@@ -22,4 +24,6 @@ export {
   ActorManagement,
   EpisodeManagement,
   MovieSlideManagement,
+  VipTypeManagement,
+  VipManagement,
 };

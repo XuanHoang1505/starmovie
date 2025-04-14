@@ -66,6 +66,8 @@ namespace starmovie.Helpers
             CreateMap<ReviewDTO, Review>()
                 .ForMember(dest => dest.User, opt => opt.Ignore())   // Không map navigation
                 .ForMember(dest => dest.Movie, opt => opt.Ignore());
+            CreateMap<VipTypeDTO, VipType>()
+                .ReverseMap();
         }
     }
 }

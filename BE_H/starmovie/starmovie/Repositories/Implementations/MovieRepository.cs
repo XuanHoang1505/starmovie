@@ -4,6 +4,7 @@ using starmovie.Data;
 using starmovie.Data.Domain;
 using starmovie.Models;
 using starmovie.Repositories.Interfaces;
+using StarMovie.Utils.Exceptions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -41,7 +42,7 @@ namespace starmovie.Repositories.Implementations
                 .FirstOrDefaultAsync(m => m.MovieID == id);
             if (movie == null)
             {
-                throw new KeyNotFoundException($"Không tìm thấy phim với ID: {id}");
+                throw new AppException(ErrorCode.MovieNotFound, "Không tìm thấy phim với ID: " + id);
             }
             return movie;
         }
@@ -87,7 +88,7 @@ namespace starmovie.Repositories.Implementations
                 .FirstOrDefaultAsync(m => m.MovieID == movie.MovieID);
 
             if (existingMovie == null)
-                throw new KeyNotFoundException($"Không tìm thấy phim với ID: {movie.MovieID}");
+                throw new AppException(ErrorCode.MovieNotFound, "Không tìm thấy phim với ID: " + movie.MovieID);
 
             // Cập nhật thông tin cơ bản
             _context.Entry(existingMovie).CurrentValues.SetValues(movie);

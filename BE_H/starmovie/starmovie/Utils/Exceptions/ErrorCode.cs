@@ -55,6 +55,7 @@ namespace StarMovie.Utils.Exceptions
         /// Mật khẩu cũ không đúng khi thay đổi mật khẩu.
         /// </summary>
         IncorrectOldPassword = 2007,
+        VipTypeNotFound = 2008,
 
         // 🔹 Lỗi hệ thống và máy chủ (System Errors)
 

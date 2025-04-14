@@ -10,6 +10,8 @@ import {
   UserManagement,
   ActorManagement,
   MovieSlideManagement,
+  VipTypeManagement,
+  VipManagement,
 } from "../../pages";
 
 const routes = [
@@ -28,6 +30,8 @@ const routes = [
   { path: "categories", name: "Danh mục", element: CategoryManagement },
   { path: "users", name: "Người dùng", element: UserManagement },
   { path: "actors", name: "Diễn viên", element: ActorManagement },
+  { path: "vips/vipTypes", name: "Loại VIP", element: VipTypeManagement },
+  { path: "vips/vipMembers", name: "Thành viên VIP", element: VipManagement },
 ];
 
 export default routes;

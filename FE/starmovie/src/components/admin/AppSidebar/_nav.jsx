@@ -1,17 +1,14 @@
 import React from "react";
 import CIcon from "@coreui/icons-react";
 import { TfiLayoutSlider } from "react-icons/tfi";
-import { RiMovie2AiLine } from "react-icons/ri";
+import { RiMovie2AiLine, RiVipCrown2Line } from "react-icons/ri";
 import {
   cilSpeedometer,
-  cilHome,
-  cilMovie,
   cilList,
   cilStar,
   cilCommentBubble,
   cilPeople,
   cilUser,
-  cilMediaPause,
 } from "@coreui/icons";
 
 import { CNavGroup, CNavItem, CNavTitle } from "@coreui/react";
@@ -76,6 +73,26 @@ const _nav = [
     name: "Người dùng",
     to: "users",
     icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavGroup,
+    name: "VIP",
+    to: "vips",
+    icon: <RiVipCrown2Line className="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: "Thành viên VIP",
+        to: "vips/vipMembers",
+        // icon: <RiMovie2AiLine className="nav-icon" />,
+      },
+      {
+        component: CNavItem,
+        name: "Loại VIP",
+        to: "vips/vipTypes",
+        // icon: <CIcon icon={cilMediaPause} customClassName="nav-icon" size="sm"/>,
+      },
+    ],
   },
   {
     component: CNavItem,
