@@ -33,6 +33,7 @@ const VipTypeManagement = () => {
     { key: "id", label: "ID" },
     { key: "typeName", label: "Tên loại vip" },
     { key: "price", label: "Giá" },
+    { key: "duration", label: "Thời gian (ngày)" },
   ];
 
   const fetchVipTypeData = async () => {
@@ -57,6 +58,7 @@ const VipTypeManagement = () => {
       id: "",
       typeName: "",
       price: "",
+      duration: "",
     });
     handleResetStatus();
     setErrorFields({});
@@ -87,6 +89,15 @@ const VipTypeManagement = () => {
           error = "Giá phải lớn hơn hoặc bằng 0.";
         }
         break;
+      case "duration":
+        if (!value || value.trim() === "") {
+          error = "Thời gian không được để trống.";
+        } else if (isNaN(value)) {
+          error = "Thời gian phải là một số.";
+        } else if (Number(value) <= 0) {
+          error = "Thời gian phải lớn hơn 0.";
+        }
+        break;
       default:
         break;
     }
@@ -114,6 +125,14 @@ const VipTypeManagement = () => {
       newErrors.price = "Giá phải là một số.";
     } else if (Number(formData.price) < 0) {
       newErrors.price = "Giá phải lớn hơn hoặc bằng 0.";
+    }
+
+    if (!formData.duration || formData.duration === "") {
+      newErrors.duration = "Thời hạn không được để trống.";
+    } else if (isNaN(formData.duration)) {
+      newErrors.duration = "Thời hạn phải là một số.";
+    } else if (Number(formData.duration) <= 0) {
+      newErrors.duration = "Thời hạn phải lớn  0.";
     }
 
     // Cập nhật lỗi vào state
@@ -237,6 +256,32 @@ const VipTypeManagement = () => {
             />
             <Form.Control.Feedback type="invalid">
               {errorFields.price}
+            </Form.Control.Feedback>
+          </Form.Group>
+
+          <Form.Group controlId="formDuration" className="mt-3">
+            <Form.Label>
+              Thời lượng <span className="text-danger">(*)</span>
+            </Form.Label>
+            <NumericFormat
+              thousandSeparator={true}
+              suffix=" ngày"
+              decimalScale={0} // Chỉ cho số nguyên
+              allowNegative={false} // Không cho nhập số âm
+              value={formData.duration}
+              inputMode="numeric"
+              onValueChange={(values) => {
+                const { value } = values;
+                handleInputChange("duration", value ?? "");
+              }}
+              className={`form-control ${
+                errorFields.duration ? "is-invalid" : ""
+              }`}
+              placeholder="Nhập thời lượng (ngày)"
+              required
+            />
+            <Form.Control.Feedback type="invalid">
+              {errorFields.duration}
             </Form.Control.Feedback>
           </Form.Group>
         </div>

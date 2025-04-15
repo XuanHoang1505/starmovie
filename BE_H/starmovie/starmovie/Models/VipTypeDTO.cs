@@ -10,5 +10,7 @@ namespace starmovie.Models
         public string TypeName { get; set; }
         [JsonPropertyName("price")]
         public double Price { get; set; }
+        [JsonPropertyName("duration")]
+        public int Duration { get; set; }
     }
 }

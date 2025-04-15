@@ -68,6 +68,11 @@ namespace starmovie.Helpers
                 .ForMember(dest => dest.Movie, opt => opt.Ignore());
             CreateMap<VipTypeDTO, VipType>()
                 .ReverseMap();
+            CreateMap<Vip, VipDTO>()
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.FullName))
+                .ForMember(dest => dest.VipTypeName, opt => opt.MapFrom(src => src.VipType.TypeName));
+            CreateMap<VipDTO, Vip>()
+                .ForMember(dest => dest.User, opt => opt.Ignore());  // Không map navigation
         }
     }
 }

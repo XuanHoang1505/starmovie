@@ -10,5 +10,6 @@ namespace starmovie.Data.Domain
         public string TypeName { get; set; }
         [Required]
         public double Price { get; set; }
+        public int Duration { get; set; } // Thời gian VIP (phút)
     }
 }

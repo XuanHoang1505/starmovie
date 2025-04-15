@@ -61,7 +61,6 @@ namespace starmovie.Controllers.admin
         [Authorize(Roles = "ADMIN")]
         public async Task<ActionResult<VipTypeDTO>> UpdateVipType(int id, [FromBody] VipType vipType)
         {
-            Console.WriteLine($"ID URL: {id}, VipType: {vipType.VipTypeID}");
             if (id != vipType.VipTypeID)
                 return BadRequest(new { message = "ID không trùng khớp." });
 

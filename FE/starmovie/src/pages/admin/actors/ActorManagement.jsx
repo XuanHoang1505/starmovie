@@ -44,7 +44,6 @@ const ActorManagement = () => {
     setLoadingPage(true);
     try {
       const data = await ActorService.getActors();
-      console.log(data);
 
       const formatData = data.map((actor) => ({
         ...actor,
