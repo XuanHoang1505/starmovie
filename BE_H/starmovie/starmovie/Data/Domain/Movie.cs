@@ -19,7 +19,6 @@ namespace starmovie.Data.Domain
         [StringLength(255)]
         public string TrailerUrl { get; set; }
 
-        // ✅ Thêm khởi tạo danh sách tránh lỗi null
         public List<Movie_Genre> MovieGenres { get; set; } = new List<Movie_Genre>();
         public List<Movie_Category> MovieCategories { get; set; } = new List<Movie_Category>();
         public List<Movie_Actor> MovieActors { get; set; } = new List<Movie_Actor>();

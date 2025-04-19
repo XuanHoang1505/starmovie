@@ -19,6 +19,8 @@ namespace starmovie.Data.Domain
         public string TrailerUrl { get; set; }
         [StringLength(255)]
         public string MovieUrl { get; set; }
+
+        public int ViewCount { get; set; } = 0;
         public int MovieID { get; set; }
         [ForeignKey("MovieID")]
         public Movie Movie { get; set; }

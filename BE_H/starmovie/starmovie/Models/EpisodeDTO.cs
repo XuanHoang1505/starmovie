@@ -17,6 +17,8 @@ namespace starmovie.Models
         public string TrailerUrl { get; set; }
         [JsonPropertyName("movieUrl")]
         public string MovieUrl { get; set; }
+        [JsonPropertyName("view")]
+        public int ViewCount { get; set; }
         [JsonPropertyName("movieId")]
         public int MovieID { get; set; }
         [JsonPropertyName("movieTitle")]

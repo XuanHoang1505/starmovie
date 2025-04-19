@@ -76,7 +76,7 @@ namespace starmovie.Repositories.Implementations
         {
             var user = _mapper.Map<ApplicationUser>(userDto);
             user.Id = Guid.NewGuid().ToString();
-            user.RegisterDate = DateTime.UtcNow;
+            user.RegisterDate = DateTime.Now;
             user.Status = UserStatus.ACTIVE;
             user.UserName = userDto.Email;
 
