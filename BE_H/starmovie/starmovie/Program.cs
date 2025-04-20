@@ -92,6 +92,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 builder.Services.AddScoped<IVipTypeRepository, VipTypeRepository>();
 builder.Services.AddScoped<IVipRepository, VipRepository>();
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
 
 // Đăng ký CloudinaryService

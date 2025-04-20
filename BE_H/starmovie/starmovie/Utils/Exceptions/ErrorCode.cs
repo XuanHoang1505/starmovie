@@ -63,6 +63,8 @@ namespace StarMovie.Utils.Exceptions
 
         VipAlreadyExists = 2010,
 
+        CommentNotFound = 2011,
+
         // 🔹 Lỗi hệ thống và máy chủ (System Errors)
 
         /// <summary>

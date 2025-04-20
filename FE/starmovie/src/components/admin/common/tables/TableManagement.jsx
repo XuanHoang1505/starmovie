@@ -259,40 +259,6 @@ const TableManagement = ({
             )}
           </span>
         );
-      // case "vipType":
-      //   let ticketTypeClass = "";
-      //   let ticketTypeText = "";
-
-      //   switch (item.ticketType) {
-      //     case "ONETIME_TICKET":
-      //       ticketTypeClass = "text-bg-primary"; // Vé cơ bản
-      //       ticketTypeText = "Vé một lần";
-      //       break;
-      //     case "WEEKLY_TICKET":
-      //       ticketTypeClass = "text-bg-success"; // Vé tuần
-      //       ticketTypeText = "Vé tuần";
-      //       break;
-      //     case "MONTHLY_TICKET":
-      //       ticketTypeClass = "text-bg-warning"; // Vé tháng (ưu đãi cao)
-      //       ticketTypeText = "Vé tháng";
-      //       break;
-      //     case "STUDENT_TICKET":8
-      //       ticketTypeClass = "text-bg-danger"; // Vé học viên
-      //       ticketTypeText = "Vé học viên";
-      //       break;
-      //     default:
-      //       ticketTypeClass = "text-bg-muted"; // Trường hợp mặc định
-      //       ticketTypeText = "Không xác định";
-      //   }
-
-      //   return (
-      //     <span
-      //       className={`rounded-3 fw-bold px-2 py-1 ${ticketTypeClass}`}
-      //       style={{ fontSize: "13px" }}
-      //     >
-      //       {ticketTypeText}
-      //     </span>
-      //   );
 
       case "role":
         return (

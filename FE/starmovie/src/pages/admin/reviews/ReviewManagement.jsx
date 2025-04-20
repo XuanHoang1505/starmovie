@@ -282,6 +282,7 @@ const ReviewManagement = () => {
               }
               placeholder="Chọn phim đánh giá"
               isInvalid={!!errorFields.movieId}
+              isDisabled={statusFunction.isEditing} // Disable nếu không phải trạng thái thêm mới
               isClearable // Cho phép xóa chọn lựa
               isSearchable // Bật tính năng tìm kiếm
               styles={{
@@ -337,6 +338,7 @@ const ReviewManagement = () => {
               }
               placeholder="Chọn người đánh giá"
               isInvalid={!!errorFields.userId}
+              isDisabled={statusFunction.isEditing} // Disable nếu không phải trạng thái thêm mới
               isClearable // Cho phép xóa chọn lựa
               isSearchable // Bật tính năng tìm kiếm
               styles={{

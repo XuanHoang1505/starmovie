@@ -73,6 +73,16 @@ namespace starmovie.Helpers
                 .ForMember(dest => dest.VipTypeName, opt => opt.MapFrom(src => src.VipType.TypeName));
             CreateMap<VipDTO, Vip>()
                 .ForMember(dest => dest.User, opt => opt.Ignore());  // Không map navigation
+            CreateMap<Comment, CommentDTO>()
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.User.FullName))
+                .ForMember(dest => dest.EpisodeTitle, opt => opt.MapFrom(src => src.Episode.EpisodeTitle))
+                .ForMember(dest => dest.MovieTitle, opt => opt.MapFrom(src => src.Episode.Movie.Title))
+                .ForMember(dest => dest.ParentContent, opt => opt.MapFrom(src => src.ParentComment != null ? src.ParentComment.Content : null));
+            CreateMap<CommentDTO, Comment>()
+                .ForMember(dest => dest.User, opt => opt.Ignore()) // không map User object
+                .ForMember(dest => dest.Episode, opt => opt.Ignore()) // không map Episode object
+                .ForMember(dest => dest.ParentComment, opt => opt.Ignore()) // không map ParentComment
+                .ForMember(dest => dest.CommentLikes, opt => opt.Ignore()); // nếu có
         }
     }
 }
