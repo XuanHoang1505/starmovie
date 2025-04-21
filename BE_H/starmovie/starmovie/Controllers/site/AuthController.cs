@@ -50,11 +50,21 @@ namespace starmovie.Controllers
             return Ok(result);
         }
 
+        [HttpPost("verify-password")]
+        public async Task<IActionResult> VerifyPassword([FromBody] VerifyPasswordDTO dto)
+        {
+            var isValid = await _userRepository.VerifyPasswordAsync(dto.UserId, dto.Password);
+            if (!isValid)
+                return BadRequest("Mật khẩu không đúng.");
+            return Ok("Mật khẩu hợp lệ.");
+        }
+
         // Đổi mật khẩu
+        [Authorize]
         [HttpPost("change-password")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDTO dto)
         {
-            var success = await _userRepository.ChangePasswordAsync(dto.UserId, dto.OldPassword, dto.NewPassword);
+            var success = await _userRepository.ChangePasswordAsync(dto.UserId, dto.CurrentPassword, dto.NewPassword);
             if (!success)
                 return BadRequest("Thay đổi mật khẩu thất bại.");
             return Ok("Thay đổi mật khẩu thành công.");

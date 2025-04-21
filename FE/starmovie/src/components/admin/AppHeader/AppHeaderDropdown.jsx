@@ -1,4 +1,6 @@
 import React, { useContext } from "react";
+import { toast } from "react-toastify";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   CAvatar,
   CBadge,
@@ -10,24 +12,27 @@ import {
   CDropdownToggle,
 } from "@coreui/react";
 import {
-  cilBell,
   cilCreditCard,
-  cilCommentSquare,
-  cilEnvelopeOpen,
   cilFile,
-  cilLockLocked,
   cilSettings,
-  cilTask,
   cilUser,
+  cilAccountLogout,
 } from "@coreui/icons";
 import CIcon from "@coreui/icons-react";
 
 import avatar1 from "../../../assets/admin/images/avatars/1.jpg";
 import { UserContext } from "../../../contexts/UserContext";
+import { logout } from "../../../services/site/AuthService";
 
 const AppHeaderDropdown = () => {
-  const { user } = useContext(UserContext);
-
+  const { user, updateUser } = useContext(UserContext);
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    logout(user.userId);
+    updateUser(null);
+    navigate("/login");
+    toast.success("Đăng xuất thành công!");
+  };
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle
@@ -47,38 +52,8 @@ const AppHeaderDropdown = () => {
         <CDropdownHeader className="bg-body-secondary fw-semibold mb-2">
           Account
         </CDropdownHeader>
-        <CDropdownItem href="#">
-          <CIcon icon={cilBell} className="me-2" />
-          Updates
-          <CBadge color="info" className="ms-2">
-            42
-          </CBadge>
-        </CDropdownItem>
-        <CDropdownItem href="#">
-          <CIcon icon={cilEnvelopeOpen} className="me-2" />
-          Messages
-          <CBadge color="success" className="ms-2">
-            42
-          </CBadge>
-        </CDropdownItem>
-        <CDropdownItem href="#">
-          <CIcon icon={cilTask} className="me-2" />
-          Tasks
-          <CBadge color="danger" className="ms-2">
-            42
-          </CBadge>
-        </CDropdownItem>
-        <CDropdownItem href="#">
-          <CIcon icon={cilCommentSquare} className="me-2" />
-          Comments
-          <CBadge color="warning" className="ms-2">
-            42
-          </CBadge>
-        </CDropdownItem>
-        <CDropdownHeader className="bg-body-secondary fw-semibold my-2">
-          Settings
-        </CDropdownHeader>
-        <CDropdownItem href="#">
+
+        <CDropdownItem as={NavLink} to="/admin/myProfile">
           <CIcon icon={cilUser} className="me-2" />
           Profile
         </CDropdownItem>
@@ -101,9 +76,9 @@ const AppHeaderDropdown = () => {
           </CBadge>
         </CDropdownItem>
         <CDropdownDivider />
-        <CDropdownItem href="#">
-          <CIcon icon={cilLockLocked} className="me-2" />
-          Lock Account
+        <CDropdownItem onClick={handleLogout} style={{ cursor: "pointer" }}>
+          <CIcon icon={cilAccountLogout} className="me-2" />
+          Log out
         </CDropdownItem>
       </CDropdownMenu>
     </CDropdown>

@@ -100,8 +100,32 @@ namespace starmovie.Repositories.Implementations
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null) return null;
 
+            // Kiểm tra email mới đã tồn tại chưa (trừ user hiện tại)
+            if (userDto.Email != user.Email && await IsEmailExistsForUpdateAsync(userDto.Email, userId))
+                return null;
+
+            // Kiểm tra số điện thoại mới đã tồn tại chưa
+            if (userDto.PhoneNumber != user.PhoneNumber && await IsPhoneNumberExistsAsync(userDto.PhoneNumber))
+                return null;
+
+            // Nếu email bị thay đổi thì lưu lại email cũ để gửi thông báo
+            bool isEmailChanged = userDto.Email != user.Email;
+            string oldEmail = user.Email;
+
+            // Cập nhật các trường thông tin
+            user.UserName = userDto.Email;
+            user.Email = userDto.Email;
+
             _mapper.Map(userDto, user);
+
+            // Cập nhật người dùng
             await _userManager.UpdateAsync(user);
+
+            // Gửi thông báo đến email cũ nếu đã thay đổi
+            if (isEmailChanged)
+            {
+                SendEmailChangeNotification(user, oldEmail);
+            }
 
             // Cập nhật vai trò nếu có
             if (!string.IsNullOrEmpty(userDto.Role))
@@ -113,10 +137,13 @@ namespace starmovie.Repositories.Implementations
                     await _userManager.AddToRoleAsync(user, userDto.Role);
                 }
             }
+
+            // Trả về DTO đã cập nhật
             var updatedDto = _mapper.Map<UserDTO>(user);
             updatedDto.Role = await GetUserRoleAsync(user);
             return updatedDto;
         }
+
 
         public async Task<bool> DeleteUserAsync(string userId)
         {
@@ -369,6 +396,46 @@ namespace starmovie.Repositories.Implementations
             user.RefreshTokenExpiryTime = null;
             await _userManager.UpdateAsync(user);
         }
+        private void SendEmailChangeNotification(ApplicationUser user, string oldEmail)
+        {
+            string emailSubject = "Email đăng nhập của bạn đã được thay đổi";
+
+            string emailBody = "<html>" +
+                "<head>" +
+                "<style>" +
+                "    body { font-family: Arial, sans-serif; line-height: 1.6; }" +
+                "    .container { max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }" +
+                "    h1 { color: #333; }" +
+                "    .info { background-color: #f9f9f9; padding: 15px; border: 1px solid #e1e1e1; border-radius: 5px; }" +
+                "    .footer { margin-top: 20px; font-size: 0.9em; color: #666; text-align: center; }" +
+                "    .footer strong { color: #333; }" +
+                "</style>" +
+                "</head>" +
+                "<body>" +
+                "    <div class='container'>" +
+                "        <div style='text-align: center; margin-bottom: 20px;'>" +
+                "            <img src='https://res.cloudinary.com/da0i2y1qu/image/upload/v1731420581/logoVertical_q1nbbl.png' alt='Hight Star Logo' style='width: 150px; height: auto;' />" +
+                "        </div>" +
+                "        <h1>Xin chào,</h1>" +
+                "        <p>Chúng tôi muốn thông báo rằng email đăng nhập tài khoản của bạn đã được thay đổi thành công.</p>" +
+                "        <div class='info'>" +
+                "            <p><strong>Email cũ:</strong> " + oldEmail + "</p>" +
+                "            <p><strong>Email mới:</strong> " + user.Email + "</p>" +
+                "        </div>" +
+                "        <p>Nếu bạn không thực hiện thay đổi này, vui lòng liên hệ ngay với chúng tôi để được hỗ trợ kịp thời.</p>" +
+                "        <div class='footer'>" +
+                "            <p>Trân trọng,<br><strong>Đội ngũ hỗ trợ khách hàng</strong></p>" +
+                "            <p><strong>Star Movie</strong><br>" +
+                "            Email: starmovieteam@gmail.com | Hotline: 0888-372-325</p>" +
+                "            <p>Đây là email tự động từ phần mềm Star Movie. Vui lòng không trả lời email này.</p>" +
+                "        </div>" +
+                "    </div>" +
+                "</body>" +
+                "</html>";
+
+            _emailService.SendEmailAsync(oldEmail, emailSubject, emailBody);
+        }
+
     }
 }
 

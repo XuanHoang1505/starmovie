@@ -1,5 +1,5 @@
 import axiosInstance from "../../config/axiosInstance"; // Axios config sẵn baseURL và headers
-import { formatDateTimeToDMY } from "../../utils/formatDate";
+import { formatDateTimeToDMY, formatToDateInput } from "../../utils/formatDate";
 
 const API_URL = "/admin/users";
 
@@ -31,7 +31,7 @@ const getUserById = async (id) => {
     const user = response.data;
     return {
       ...user,
-      birthDate: formatDateTimeToDMY(user.birthDate),
+      birthDate: formatToDateInput(user.birthDate),
       registeredDate: formatDateTimeToDMY(user.registeredDate),
       lastLogin: formatDateTimeToDMY(user.lastLogin),
     };
@@ -98,6 +98,33 @@ const deleteUser = async (id) => {
   }
 };
 
+// Hàm xác thực mật khẩu
+const verifyPassword = async (userId, password) => {
+  try {
+    const response = await axiosInstance.post(`/auth/verify-password`, {
+      userId,
+      password,
+    });
+    return response.data;
+  } catch (error) {
+    handleError(error, `Lỗi khi xác thực mật khẩu!`);
+  }
+};
+
+// Hàm thay đổi mật khẩu
+const changePassword = async (userId, currentPassword, newPassword) => {
+  try {
+    const response = await axiosInstance.post(`/auth/change-password`, {
+      userId,
+      currentPassword,
+      newPassword,
+    });
+    return response.data;
+  } catch (error) {
+    handleError(error, `Lỗi khi đổi mật khẩu!`);
+  }
+};
+
 const UserService = {
   getUsers,
   getUserById,
@@ -105,6 +132,8 @@ const UserService = {
   createUser,
   updateUser,
   deleteUser,
+  verifyPassword,
+  changePassword,
 };
 
 export default UserService;

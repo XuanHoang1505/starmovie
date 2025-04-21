@@ -68,3 +68,8 @@ export function getCurrentTime() {
   const seconds = now.getSeconds().toString().padStart(2, "0");
   return `${hours}:${minutes}:${seconds}`;
 }
+
+export function toFullISOString(dateStr) {
+  const date = new Date(dateStr);
+  return !isNaN(date.getTime()) ? date.toISOString().slice(0, 16) : "";
+}

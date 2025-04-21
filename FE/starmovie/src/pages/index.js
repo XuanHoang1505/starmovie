@@ -10,6 +10,7 @@ import EpisodeManagement from "./admin/episodes/EpisodeManagement";
 import MovieSlideManagement from "./admin/movieSlides/MovieSlideManagement";
 import VipTypeManagement from "./admin/vipTypes/VipTypeManagement";
 import VipManagement from "./admin/vips/VipManagement";
+import MyProfile from "./admin/adminProfiles/MyProfile";
 import Home from "./admin/home/Home";
 
 export {
@@ -26,4 +27,5 @@ export {
   MovieSlideManagement,
   VipTypeManagement,
   VipManagement,
+  MyProfile,
 };

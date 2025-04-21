@@ -47,7 +47,7 @@ namespace starmovie.Controllers
             return Ok(user);
         }
 
-        // [Authorize(Roles = "ADMIN")]
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         public async Task<ActionResult<UserDTO>> CreateUser([FromBody] UserDTO userDto)
         {
@@ -59,7 +59,7 @@ namespace starmovie.Controllers
             return Ok(createdUser);
         }
 
-        // [Authorize(Roles = "ADMIN")]
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult<UserDTO>> UpdateUser(string id, [FromForm] string user, [FromForm] IFormFile? file)
         {
