@@ -163,11 +163,10 @@ namespace starmovie.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Avatar")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<DateTime>("BirthDate")
+                    b.Property<DateTime?>("BirthDate")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -185,12 +184,11 @@ namespace starmovie.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<bool>("IsVIP")
+                    b.Property<bool?>("Gender")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime?>("LastLogin")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("tinyint(1)");
@@ -210,15 +208,25 @@ namespace starmovie.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("varchar(15)");
+                        .HasColumnType("longtext");
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("RefreshTokenExpiryTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("RegisterDate")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("tinyint(1)");
@@ -247,13 +255,17 @@ namespace starmovie.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ActorID"));
 
-                    b.Property<DateTime>("BirthDay")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("ActorName")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Avatar")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Nationality")
                         .IsRequired()
@@ -292,6 +304,24 @@ namespace starmovie.Migrations
                     b.ToTable("Book");
                 });
 
+            modelBuilder.Entity("starmovie.Data.Domain.Category", b =>
+                {
+                    b.Property<int>("CategoryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("CategoryID"));
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("CategoryID");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("starmovie.Data.Domain.Comment", b =>
                 {
                     b.Property<int>("CommentID")
@@ -302,10 +332,10 @@ namespace starmovie.Migrations
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
 
-                    b.Property<int>("MovieID")
+                    b.Property<int>("EpisodeID")
                         .HasColumnType("int");
 
                     b.Property<int?>("ParentCommentID")
@@ -320,11 +350,60 @@ namespace starmovie.Migrations
 
                     b.HasKey("CommentID");
 
-                    b.HasIndex("MovieID");
+                    b.HasIndex("EpisodeID");
+
+                    b.HasIndex("ParentCommentID");
 
                     b.HasIndex("UserID");
 
                     b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("starmovie.Data.Domain.Episode", b =>
+                {
+                    b.Property<int>("EpisodeID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("EpisodeID"));
+
+                    b.Property<TimeSpan>("Duration")
+                        .HasColumnType("time(6)");
+
+                    b.Property<string>("EpisodeImage")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("EpisodeTitle")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<int>("MovieID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MovieUrl")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<DateTime>("ReleaseDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("TrailerUrl")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("ViewCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("EpisodeID");
+
+                    b.HasIndex("MovieID");
+
+                    b.ToTable("Episodes");
                 });
 
             modelBuilder.Entity("starmovie.Data.Domain.Genre", b =>
@@ -353,20 +432,17 @@ namespace starmovie.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("MovieID"));
 
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("varchar(30)");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<TimeSpan>("Duration")
-                        .HasColumnType("time(6)");
+                    b.Property<string>("Poster")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
 
-                    b.Property<decimal>("Rating")
-                        .HasColumnType("decimal(65,30)");
+                    b.Property<float>("Rating")
+                        .HasColumnType("float");
 
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime(6)");
@@ -376,9 +452,35 @@ namespace starmovie.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
+                    b.Property<string>("TrailerUrl")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
                     b.HasKey("MovieID");
 
                     b.ToTable("Movies");
+                });
+
+            modelBuilder.Entity("starmovie.Data.Domain.MovieSlide", b =>
+                {
+                    b.Property<int>("SlideID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("SlideID"));
+
+                    b.Property<int>("MovieID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
+
+                    b.HasKey("SlideID");
+
+                    b.HasIndex("MovieID");
+
+                    b.ToTable("MovieSlides");
                 });
 
             modelBuilder.Entity("starmovie.Data.Domain.Movie_Actor", b =>
@@ -389,16 +491,26 @@ namespace starmovie.Migrations
                     b.Property<int>("ActorID")
                         .HasColumnType("int");
 
-                    b.Property<string>("RoleName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
                     b.HasKey("MovieID", "ActorID");
 
                     b.HasIndex("ActorID");
 
                     b.ToTable("MovieActors");
+                });
+
+            modelBuilder.Entity("starmovie.Data.Domain.Movie_Category", b =>
+                {
+                    b.Property<int>("MovieID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("int");
+
+                    b.HasKey("MovieID", "CategoryID");
+
+                    b.HasIndex("CategoryID");
+
+                    b.ToTable("MovieCategories");
                 });
 
             modelBuilder.Entity("starmovie.Data.Domain.Movie_Genre", b =>
@@ -499,27 +611,81 @@ namespace starmovie.Migrations
                     b.ToTable("UserMovieFavorites");
                 });
 
-            modelBuilder.Entity("starmovie.Data.Domain.WatchHistory", b =>
+            modelBuilder.Entity("starmovie.Data.Domain.Vip", b =>
                 {
-                    b.Property<int>("HistoryID")
+                    b.Property<int>("VipID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("HistoryID"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("VipID"));
 
-                    b.Property<int>("MovieID")
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("RegisteredDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("UserID")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("VipTypeID")
+                        .HasColumnType("int");
+
+                    b.HasKey("VipID");
+
+                    b.HasIndex("UserID");
+
+                    b.HasIndex("VipTypeID");
+
+                    b.ToTable("Vips");
+                });
+
+            modelBuilder.Entity("starmovie.Data.Domain.VipType", b =>
+                {
+                    b.Property<int>("VipTypeID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("VipTypeID"));
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("double");
+
+                    b.Property<string>("TypeName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("VipTypeID");
+
+                    b.ToTable("VipTypes");
+                });
+
+            modelBuilder.Entity("starmovie.Data.Domain.WatchHistory", b =>
+                {
+                    b.Property<int>("WatchHistoryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("WatchHistoryID"));
+
+                    b.Property<int>("EpisodeID")
                         .HasColumnType("int");
 
                     b.Property<string>("UserID")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.Property<DateTime>("WatchDate")
+                    b.Property<DateTime>("WatchedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.HasKey("HistoryID");
+                    b.HasKey("WatchHistoryID");
 
-                    b.HasIndex("MovieID");
+                    b.HasIndex("EpisodeID");
 
                     b.HasIndex("UserID");
 
@@ -579,11 +745,15 @@ namespace starmovie.Migrations
 
             modelBuilder.Entity("starmovie.Data.Domain.Comment", b =>
                 {
-                    b.HasOne("starmovie.Data.Domain.Movie", "Movie")
-                        .WithMany()
-                        .HasForeignKey("MovieID")
+                    b.HasOne("starmovie.Data.Domain.Episode", "Episode")
+                        .WithMany("Comments")
+                        .HasForeignKey("EpisodeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("starmovie.Data.Domain.Comment", "ParentComment")
+                        .WithMany("Replies")
+                        .HasForeignKey("ParentCommentID");
 
                     b.HasOne("starmovie.Data.ApplicationUser", "User")
                         .WithMany("Comments")
@@ -591,15 +761,39 @@ namespace starmovie.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Movie");
+                    b.Navigation("Episode");
+
+                    b.Navigation("ParentComment");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("starmovie.Data.Domain.Episode", b =>
+                {
+                    b.HasOne("starmovie.Data.Domain.Movie", "Movie")
+                        .WithMany("Episodes")
+                        .HasForeignKey("MovieID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Movie");
+                });
+
+            modelBuilder.Entity("starmovie.Data.Domain.MovieSlide", b =>
+                {
+                    b.HasOne("starmovie.Data.Domain.Movie", "Movie")
+                        .WithMany("MovieSlides")
+                        .HasForeignKey("MovieID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("starmovie.Data.Domain.Movie_Actor", b =>
                 {
                     b.HasOne("starmovie.Data.Domain.Actor", "Actor")
-                        .WithMany()
+                        .WithMany("MovieActors")
                         .HasForeignKey("ActorID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -615,10 +809,29 @@ namespace starmovie.Migrations
                     b.Navigation("Movie");
                 });
 
+            modelBuilder.Entity("starmovie.Data.Domain.Movie_Category", b =>
+                {
+                    b.HasOne("starmovie.Data.Domain.Category", "Category")
+                        .WithMany("MovieCategories")
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("starmovie.Data.Domain.Movie", "Movie")
+                        .WithMany("MovieCategories")
+                        .HasForeignKey("MovieID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Movie");
+                });
+
             modelBuilder.Entity("starmovie.Data.Domain.Movie_Genre", b =>
                 {
                     b.HasOne("starmovie.Data.Domain.Genre", "Genre")
-                        .WithMany()
+                        .WithMany("MovieGenres")
                         .HasForeignKey("GenreID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -656,13 +869,13 @@ namespace starmovie.Migrations
             modelBuilder.Entity("starmovie.Data.Domain.User_Comment_Like", b =>
                 {
                     b.HasOne("starmovie.Data.Domain.Comment", "Comment")
-                        .WithMany()
+                        .WithMany("CommentLikes")
                         .HasForeignKey("CommentID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("starmovie.Data.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("likes")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -681,7 +894,7 @@ namespace starmovie.Migrations
                         .IsRequired();
 
                     b.HasOne("starmovie.Data.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("UserFollowActors")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -694,7 +907,7 @@ namespace starmovie.Migrations
             modelBuilder.Entity("starmovie.Data.Domain.User_Movie_Favorite", b =>
                 {
                     b.HasOne("starmovie.Data.Domain.Movie", "Movie")
-                        .WithMany()
+                        .WithMany("FavoriteMovies")
                         .HasForeignKey("MovieID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -710,11 +923,30 @@ namespace starmovie.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("starmovie.Data.Domain.Vip", b =>
+                {
+                    b.HasOne("starmovie.Data.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("starmovie.Data.Domain.VipType", "VipType")
+                        .WithMany()
+                        .HasForeignKey("VipTypeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+
+                    b.Navigation("VipType");
+                });
+
             modelBuilder.Entity("starmovie.Data.Domain.WatchHistory", b =>
                 {
-                    b.HasOne("starmovie.Data.Domain.Movie", "Movie")
+                    b.HasOne("starmovie.Data.Domain.Episode", "Episode")
                         .WithMany("WatchHistories")
-                        .HasForeignKey("MovieID")
+                        .HasForeignKey("EpisodeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -724,7 +956,7 @@ namespace starmovie.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Movie");
+                    b.Navigation("Episode");
 
                     b.Navigation("User");
                 });
@@ -737,18 +969,57 @@ namespace starmovie.Migrations
 
                     b.Navigation("Reviews");
 
+                    b.Navigation("UserFollowActors");
+
                     b.Navigation("WatchHistories");
+
+                    b.Navigation("likes");
+                });
+
+            modelBuilder.Entity("starmovie.Data.Domain.Actor", b =>
+                {
+                    b.Navigation("MovieActors");
+                });
+
+            modelBuilder.Entity("starmovie.Data.Domain.Category", b =>
+                {
+                    b.Navigation("MovieCategories");
+                });
+
+            modelBuilder.Entity("starmovie.Data.Domain.Comment", b =>
+                {
+                    b.Navigation("CommentLikes");
+
+                    b.Navigation("Replies");
+                });
+
+            modelBuilder.Entity("starmovie.Data.Domain.Episode", b =>
+                {
+                    b.Navigation("Comments");
+
+                    b.Navigation("WatchHistories");
+                });
+
+            modelBuilder.Entity("starmovie.Data.Domain.Genre", b =>
+                {
+                    b.Navigation("MovieGenres");
                 });
 
             modelBuilder.Entity("starmovie.Data.Domain.Movie", b =>
                 {
+                    b.Navigation("Episodes");
+
+                    b.Navigation("FavoriteMovies");
+
                     b.Navigation("MovieActors");
+
+                    b.Navigation("MovieCategories");
 
                     b.Navigation("MovieGenres");
 
-                    b.Navigation("Reviews");
+                    b.Navigation("MovieSlides");
 
-                    b.Navigation("WatchHistories");
+                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }

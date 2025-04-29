@@ -10,6 +10,15 @@ export function formatDateToDMY(inputDate) {
   return `${day}/${month}/${year}`;
 }
 
+export const formatToDateInput = (dateStr) => {
+  const date = new Date(dateStr);
+  // Kiểm tra nếu là ngày hợp lệ
+  if (!isNaN(date.getTime())) {
+    return date.toISOString().split("T")[0]; // "2025-04-03"
+  }
+  return "";
+};
+
 export function formatDateTimeToISO(inputDateTime) {
   if (!inputDateTime) return "";
   const [date, time] = inputDateTime.split(" ");
@@ -58,4 +67,9 @@ export function getCurrentTime() {
   const minutes = now.getMinutes().toString().padStart(2, "0");
   const seconds = now.getSeconds().toString().padStart(2, "0");
   return `${hours}:${minutes}:${seconds}`;
+}
+
+export function toFullISOString(dateStr) {
+  const date = new Date(dateStr);
+  return !isNaN(date.getTime()) ? date.toISOString().slice(0, 16) : "";
 }

@@ -1,10 +1,22 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using starmovie.Configurations;
 using starmovie.Data;
-using starmovie.Repositories;
+using starmovie.Repositories.Implementations;
+using starmovie.Repositories.Interfaces;
+using starmovie.Services;
+using starmovie.Models;
 using System.Text;
+using System.Text.Json.Serialization;
+using StarMovie.Utils.Exceptions;
+using starmovie.Utils;
+using System.Net;
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,10 +30,10 @@ builder.Services.AddDbContext<MovieContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
         ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
-    )
+    ).EnableSensitiveDataLogging()
 );
 // Cấu hình Identity
-builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<MovieContext>()
     .AddDefaultTokenProviders();
 
@@ -40,7 +52,8 @@ builder.Services.AddAuthentication(options =>
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options =>
+})
+.AddJwtBearer(options =>
 {
     options.SaveToken = true;
     options.RequireHttpsMetadata = false;
@@ -51,18 +64,72 @@ builder.Services.AddAuthentication(options =>
         ValidAudience = builder.Configuration["JWT:ValidAudience"],
         ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes
-            (builder.Configuration["JWT:Secret"]))
+            (builder.Configuration["JWT:Secret"])),
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero
+    };
+    options.Events = new JwtBearerEvents
+    {
+        OnTokenValidated = context =>
+        {
+            Console.WriteLine("✅ Token hợp lệ!");
+            return Task.CompletedTask;
+        },
+        OnAuthenticationFailed = context =>
+        {
+            Console.WriteLine("❌ Token không hợp lệ: " + context.Exception.Message);
+            return Task.CompletedTask;
+        }
     };
 
+
+})
+.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+.AddGoogle(googleOptions =>
+{
+    googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+    googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+    googleOptions.CallbackPath = "/api/externalAuth/google-callback"; // URL callback
+    googleOptions.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme; // Sử dụng Cookie Authentication để lưu thông tin người dùng sau khi đăng nhập thành công
+})
+.AddFacebook(facebookOptions =>
+{
+    facebookOptions.AppId = builder.Configuration["Authentication:Facebook:AppId"];
+    facebookOptions.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"];
+    facebookOptions.CallbackPath = "/api/externalAuth/facebook-callback"; // URL callback
 });
 builder.Services.AddAuthorization();
 
 builder.Services.AddAutoMapper(typeof(Program));
 
-
 // Đăng kí Api controller
-builder.Services.AddScoped<IBookRepository, BookRepository>();
-builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IGenreRepository, GenreRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IActorRepository, ActorRepository>();
+builder.Services.AddScoped<IMovieRepository, MovieRepository>();
+builder.Services.AddScoped<IEpisodeRepository, EpisodeRepository>();
+builder.Services.AddScoped<IMovieSlideRepository, MovieSlideRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+builder.Services.AddScoped<IVipTypeRepository, VipTypeRepository>();
+builder.Services.AddScoped<IVipRepository, VipRepository>();
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
+builder.Services.AddScoped<IExternalAuthRepository, ExternalAuthRepository>();
+
+// Đăng ký CloudinaryService
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+builder.Services.AddSingleton<CloudinaryService>();
+
+// Đăng ký dịch vụ JWT
+builder.Services.AddScoped<JwtTokenProvider>();
+
+// Đăng ký dịch vụ Email
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddTransient<ISendMailService, SendMailService>();
+
+// Đăng ký dịch vụ OTP
+builder.Services.AddTransient<OtpService>();
 
 builder.Services.AddCors(options =>
 {
@@ -71,10 +138,50 @@ builder.Services.AddCors(options =>
         {
             policy.AllowAnyOrigin()
                   .AllowAnyMethod()
-                  .AllowAnyHeader();
+                  .AllowAnyHeader()
+                  .WithExposedHeaders("Authorization");
         });
 });
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
+//tránh vòng lặp
 
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+});
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Description = "Nhập JWT Token ở đây (Bearer <your-token>)"
+    });
+    options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
 
 var app = builder.Build();
 
@@ -85,16 +192,20 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+app.UseCors("AllowAll");
+
 // Thêm Authentication Middleware
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapIdentityApi<ApplicationUser>();
+// Thêm Middleware xử lý lỗi
+app.UseMiddleware<ExceptionMiddleware>();
+
 
 app.UseHttpsRedirection();
 app.MapControllers();
 
-app.UseCors("AllowAll");
 
 
 app.Run();

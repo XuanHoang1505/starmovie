@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace starmovie.Data.Domain
 {
@@ -7,13 +6,13 @@ namespace starmovie.Data.Domain
     {
         [Key]
         public int ActorID { get; set; }
-
         [Required, StringLength(50)]
-        public string Name { get; set; }
-
-        public DateTime BirthDay { get; set; }
-
+        public string ActorName { get; set; }
+        public string Avatar { get; set; }
+        [Required]
+        public DateTime BirthDate { get; set; }
         [StringLength(30)]
         public string Nationality { get; set; }
+        public List<Movie_Actor> MovieActors { get; set; }
     }
 }

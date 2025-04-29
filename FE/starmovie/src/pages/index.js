@@ -6,16 +6,28 @@ import ReviewManagement from "./admin/reviews/ReviewManagement";
 import UserManagement from "./admin/users/UserManagement";
 import CategoryManagement from "./admin/categories/CategoryManagement";
 import ActorManagement from "./admin/actors/ActorManagement";
-import Home from "./admin/home/Home";
+import EpisodeManagement from "./admin/episodes/EpisodeManagement";
+import MovieSlideManagement from "./admin/movieSlides/MovieSlideManagement";
+import VipTypeManagement from "./admin/vipTypes/VipTypeManagement";
+import VipManagement from "./admin/vips/VipManagement";
+import MyProfile from "./admin/adminProfiles/MyProfile";
+import AdminHome from "./admin/home/Home";
+import Home from "./site/home/Home";
 
 export {
   CommentManagement,
   Dashboard,
   GenreManagement,
-  Home,
+  AdminHome,
   MovieManagement,
   ReviewManagement,
   UserManagement,
   CategoryManagement,
   ActorManagement,
+  EpisodeManagement,
+  MovieSlideManagement,
+  VipTypeManagement,
+  VipManagement,
+  MyProfile,
+  Home,
 };

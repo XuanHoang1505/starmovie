@@ -11,7 +11,7 @@ const AdminLayout = () => {
   return (
     <GlobalStyles>
       <AppSidebar />
-      <div className="light_background wrapper d-flex flex-column min-vh-100">
+      <div className=" wrapper d-flex flex-column min-vh-100">
         <AppHeader />
         <div className="body flex-grow-1">
           <AppContent />

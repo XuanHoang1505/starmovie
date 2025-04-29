@@ -10,9 +10,6 @@ namespace starmovie.Data.Domain
         public int MovieID { get; set; }
         public int ActorID { get; set; }
 
-        [StringLength(50)]
-        public string RoleName { get; set; }
-
         [ForeignKey("MovieID")]
         public Movie Movie { get; set; }
 
