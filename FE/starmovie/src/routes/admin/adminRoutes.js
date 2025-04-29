@@ -1,5 +1,5 @@
 import {
-  Home,
+  AdminHome,
   Dashboard,
   MovieManagement,
   EpisodeManagement,
@@ -16,7 +16,7 @@ import {
 } from "../../pages";
 
 const routes = [
-  { path: "", name: "Trang chủ", element: Home },
+  { path: "", name: "Trang chủ", element: AdminHome },
   { path: "dashboard", name: "Bảng điều khiển", element: Dashboard },
   { path: "movies/movies", name: "Phim", element: MovieManagement },
   {

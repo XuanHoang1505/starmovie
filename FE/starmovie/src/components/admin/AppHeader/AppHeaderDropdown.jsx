@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { toast } from "react-toastify";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
-  CAvatar,
   CBadge,
   CDropdown,
   CDropdownDivider,
@@ -20,7 +19,7 @@ import {
 } from "@coreui/icons";
 import CIcon from "@coreui/icons-react";
 
-import avatar1 from "../../../assets/admin/images/avatars/1.jpg";
+import defaultAvatar from "../../../assets/admin/images/avatars/user.png";
 import { UserContext } from "../../../contexts/UserContext";
 import { logout } from "../../../services/site/AuthService";
 
@@ -30,7 +29,7 @@ const AppHeaderDropdown = () => {
   const handleLogout = async () => {
     logout(user.userId);
     updateUser(null);
-    navigate("/login");
+    navigate("/");
     toast.success("Đăng xuất thành công!");
   };
   return (
@@ -41,7 +40,7 @@ const AppHeaderDropdown = () => {
         caret={false}
       >
         <img
-          src={user.avatar || avatar1}
+          src={user.avatar || defaultAvatar}
           alt="avatar"
           size="md"
           className="object-fit-cover rounded-circle"

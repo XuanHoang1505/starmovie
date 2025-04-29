@@ -54,9 +54,6 @@ function App() {
             }
           >
             <Routes>
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<SignUpPage />} />
-
               <Route
                 path="/admin/*"
                 element={
@@ -65,10 +62,9 @@ function App() {
                   </PrivateRoute>
                 }
               />
-
-              {/* <Route path="/*" element={<SiteLayout />} /> */}
-
-              <Route path="/" element={<Navigate to="/login" replace />} />
+              <Route path="/*" element={<SiteLayout />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<SignUpPage />} />
             </Routes>
           </Suspense>
         </UserProvider>

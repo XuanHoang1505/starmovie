@@ -89,7 +89,10 @@ function LoginPage() {
       }
     }
   };
-
+  const googleLogin = () => {
+    window.location.href =
+      "http://localhost:5145/api/externalAuth/signin-google"; // Hoặc domain API của bạn
+  };
   return (
     <>
       <Helmet>
@@ -219,6 +222,7 @@ function LoginPage() {
                   <button
                     type="button"
                     className="btn p-2 mx-2 border-0 rounded-circle"
+                    onClick={googleLogin}
                   >
                     <img src={iconGG} width={30} alt="Google" />
                   </button>

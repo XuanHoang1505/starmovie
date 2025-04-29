@@ -17,13 +17,11 @@ import "react-toastify/dist/ReactToastify.css";
 import {
   formatDateTimeToDMY,
   formatDateTimeToISO,
-  toFullISOString,
 } from "../../../utils/formatDate";
 import { UserContext } from "../../../contexts/UserContext";
 import ChangePasswordModal from "./ChangePasswordModal";
 import VerifyPasswordModal from "./VerifyPasswordModal";
 import { useNavigate } from "react-router-dom";
-import { register } from "../../../services/site/AuthService";
 
 const MyProfile = () => {
   const { user, updateUser } = useContext(UserContext);
