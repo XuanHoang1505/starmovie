@@ -1,0 +1,5 @@
+# Created at 2025-04-16T16:22:42.133
+Boot Manifest-JAR contains absolute paths in classpath 'H:\FPT_Polytechnic\DUAN_WEBPHIM\source\StarMovie\BE_L\starmovie\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+'other' has different root
+
