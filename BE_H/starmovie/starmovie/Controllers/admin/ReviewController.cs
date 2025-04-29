@@ -9,7 +9,6 @@ namespace starmovie.Controllers
 {
     [Route("api/reviews")]
     [ApiController]
-    [Authorize]
     public class ReviewController : ControllerBase
     {
         private readonly IReviewRepository _reviewRepository;
@@ -59,7 +58,7 @@ namespace starmovie.Controllers
             var reviews = await _reviewRepository.GetReviewsByUserIdAsync(userId);
             return Ok(reviews);
         }
-
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<ReviewDTO>> CreateReview([FromBody] ReviewDTO dto)
         {
@@ -74,7 +73,7 @@ namespace starmovie.Controllers
                 return Conflict(new { message = ex.Message });
             }
         }
-
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateReview(int id, [FromBody] ReviewDTO dto)
         {
@@ -90,7 +89,7 @@ namespace starmovie.Controllers
                 return StatusCode(403, new { message = ex.Message });
             }
         }
-
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReview(int id)
         {

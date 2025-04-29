@@ -22,7 +22,8 @@ namespace starmovie.Services
         public string SendOtp(string email)
         {
             string otp = GenerateOtp();
-
+            var otpData = new OtpData(otp, DateTime.Now.AddMinutes(OtpExpiryMinutes));
+            OtpStorage[email] = otpData;
             SendOtpEmail(email, otp); // Gửi OTP qua email
             return otp;
         }

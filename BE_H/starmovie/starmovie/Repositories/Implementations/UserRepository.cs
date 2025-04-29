@@ -224,7 +224,7 @@ namespace starmovie.Repositories.Implementations
                 var refreshToken = "Bearer " + _jwtTokenProvider.GenerateRefreshToken();
 
                 user.RefreshToken = refreshToken;
-                user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(10);
+                user.RefreshTokenExpiryTime = DateTime.Now.AddDays(10);
 
                 await _userManager.UpdateAsync(user);
 

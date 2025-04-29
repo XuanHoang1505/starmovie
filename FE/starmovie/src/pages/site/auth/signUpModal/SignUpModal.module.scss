@@ -1,0 +1,34 @@
+.signUpButton{
+    background-color: #00CC36 !important;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+
+    &:hover{
+        background-color: #40df6a !important;
+    }
+}
+.eyeButton {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #495057; 
+  
+    &:hover {
+      color: #000; 
+    }
+  }
+.signUpLink{
+    color: #28a745;
+    font-weight: 500 ;
+    cursor: pointer;   
+}
+  
+

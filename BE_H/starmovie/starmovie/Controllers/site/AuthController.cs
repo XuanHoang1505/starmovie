@@ -71,7 +71,6 @@ namespace starmovie.Controllers
         }
 
         // Quên mật khẩu
-        [Authorize]
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDTO dto)
         {
@@ -83,12 +82,23 @@ namespace starmovie.Controllers
 
         // Gửi OTP
         [HttpPost("send-otp")]
-        public IActionResult SendOtp([FromBody] SendOtpDTO dto)
+        public async Task<IActionResult> SendOtp([FromBody] SendOtpDTO dto)
         {
             try
             {
+                var existsEmail = await _userRepository.IsEmailExistsAsync(dto.Identifier);
+                if (dto.Type == "REGISTER")
+                {
+                    if (existsEmail)
+                        return BadRequest(new { success = false, message = "Email đã tồn tại." });
+                }
+                else
+                {
+                    if (!existsEmail)
+                        return BadRequest("Email của bạn chưa đăng kí hệ thống của chúng tôi.");
+                }
                 string otp = _otpService.SendOtp(dto.Identifier);
-                return Ok(new { Message = "OTP đã được gửi thành công." });
+                return Ok(new { Message = "OTP đã được gửi thành công. Vui lòng kiểm tra email của bạn!" });
             }
             catch
             {
@@ -137,12 +147,11 @@ namespace starmovie.Controllers
             return Unauthorized("Refresh token không hợp lệ hoặc đã hết hạn.");
         }
 
-
         // Đăng xuất
-        [Authorize]
         [HttpPost("logout")]
         public async Task<IActionResult> Logout([FromBody] LogoutDTO logoutDTO)
         {
+            Console.WriteLine("Logout request received for user: " + logoutDTO.UserId);
             await _userRepository.LogoutAsync(logoutDTO.UserId);
             return Ok("Đăng xuất thành công.");
         }

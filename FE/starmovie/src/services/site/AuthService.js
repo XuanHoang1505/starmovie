@@ -25,6 +25,8 @@ export const login = async (username, password) => {
   }
 };
 
+// Đăng nhập bằng Google
+
 // Đăng ký
 export const register = async (userData) => {
   try {
@@ -60,11 +62,11 @@ export const refreshToken = async () => {
 };
 
 // Gửi OTP
-export const sendOtp = async (identifier, userData) => {
+export const sendOtp = async (identifier, type) => {
   try {
     const response = await axiosInstance.post(`${AUTH_URL}/send-otp`, {
       identifier,
-      userData,
+      type,
     });
     return response.data;
   } catch (error) {
@@ -74,11 +76,10 @@ export const sendOtp = async (identifier, userData) => {
 };
 
 // Gửi lại OTP
-export const resendOtp = async (identifier, userData) => {
+export const resendOtp = async (identifier) => {
   try {
     const response = await axiosInstance.post(`${AUTH_URL}/resend-otp`, {
       identifier,
-      userData,
     });
     return response.data;
   } catch (error) {
@@ -124,8 +125,9 @@ export const logout = async (userId) => {
   } catch (error) {
     handleErrorResponse(error);
     throw error;
+  } finally {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("userDetail");
   }
-  localStorage.removeItem("accessToken");
-  localStorage.removeItem("refreshToken");
-  localStorage.removeItem("userDetail");
 };

@@ -9,7 +9,6 @@ namespace starmovie.Controllers
 {
     [Route("api/comments")]
     [ApiController]
-    [Authorize]
     public class CommentController : ControllerBase
     {
         private readonly ICommentRepository _commentRepository;
@@ -59,7 +58,7 @@ namespace starmovie.Controllers
             var comments = await _commentRepository.GetCommentsByUserIdAsync(userId);
             return Ok(comments);
         }
-
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<CommentDTO>> CreateComment([FromBody] CommentDTO dto)
         {
@@ -74,7 +73,7 @@ namespace starmovie.Controllers
                 return Conflict(new { message = ex.Message });
             }
         }
-
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult<CommentDTO>> UpdateComment(int id, [FromBody] CommentDTO dto)
         {
@@ -97,6 +96,7 @@ namespace starmovie.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteComment(int id)
         {

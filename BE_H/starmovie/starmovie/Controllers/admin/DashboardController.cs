@@ -6,7 +6,6 @@ namespace starmovie.Controllers.admin
     using starmovie.Repositories.Interfaces;
     using System.Threading.Tasks;
 
-    [Authorize(Roles = "ADMIN")]
     [Route("api/admin/dashboard")]
     [ApiController]
     public class DashboardController : ControllerBase
@@ -17,6 +16,7 @@ namespace starmovie.Controllers.admin
         {
             _dashboardRepository = dashboardRepository;
         }
+
         [HttpGet("statistics")]
         public async Task<ActionResult<DashboardStatisticsDTO>> GetDashboardStatistics()
         {
