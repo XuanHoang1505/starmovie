@@ -18,8 +18,8 @@ export default function TippyWrapper({
     clearTimeout(timeoutRef.current);
     setVisible(true);
     if (!hasHoveredRef.current) {
-      onHover();
       hasHoveredRef.current = true;
+      onHover();
     }
   };
 
@@ -27,7 +27,7 @@ export default function TippyWrapper({
     timeoutRef.current = setTimeout(() => {
       setVisible(false);
       onHover();
-    }, 150);
+    }, 50);
   };
 
   return (

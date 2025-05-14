@@ -1,19 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import Tippy from "@tippyjs/react/headless";
-import { Button, Dropdown } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { UserContext } from "../../../contexts/UserContext";
-import { logout } from "../../../services/site/AuthService";
-import defaultAvatar from "../../../assets/admin/images/avatars/user.png";
 import {
   openModal,
   closeModal,
   setOtpInfo,
   resetAllModals,
 } from "../../../redux/slices/authModalSlice";
-import TippyWrapper from "../common/tippyWrapper/TippyWrapper";
 
+import useDebounce from "../../../hooks/useDebounce";
+
+import Search from "../search/Search";
 import LoginSelectionModal from "../../../pages/site/auth/loginSelectionModal/LoginSelectionModal";
 import LoginModal from "../../../pages/site/auth/loginModal/LoginModal";
 import SignUpSelectionModal from "../../../pages/site/auth/signUpSelectionModal/SignUpSelectionModal";
@@ -24,8 +22,14 @@ import ResetPasswordModal from "../../../pages/site/auth/resetPasswordModal/Rese
 
 import styles from "./Header.module.scss";
 import CategoryMenu from "../categoryMenu/CategoryMenu";
+import WatchHistoryNav from "../watchHistoryNav/WatchHistoryNav";
+import LanguageNav from "../languageNav/LanguageNav";
+import AccountNav from "../accountNav/AccountNav";
+import VipNav from "../vipNav/VipNav";
 
 function Header() {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const debouncedWidth = useDebounce(windowWidth, 100);
   const dispatch = useDispatch();
   const {
     showLoginSelectionModal,
@@ -38,7 +42,7 @@ function Header() {
     otpInfo,
   } = useSelector((state) => state.authModal);
   const [iconUp, setIconUp] = useState(false);
-  const { user, updateUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     if (!user) {
@@ -46,11 +50,14 @@ function Header() {
     }
   }, [user, dispatch]);
 
-  const handleLogout = async () => {
-    logout(user.userId);
-    updateUser(null);
-  };
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
 
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   const handleSignUpSuccess = (info) => {
     dispatch(setOtpInfo(info));
     dispatch(closeModal("showSignUpModal"));
@@ -63,6 +70,27 @@ function Header() {
     dispatch(openModal("showVerifyOtpModal"));
   };
   const categories = ["Phim Bộ", "Phim Hàn", "Phim Lẻ", "Hoạt hình"];
+  const fakeWatchHistories = [
+    {
+      movieTitle: "Vô Ưu Độ",
+      poster:
+        "https://th.bing.com/th/id/OIP.2UKgeVT8qv_rNjXRtsCcuAHaE8?w=233&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+      episodeTitle: "tập 12",
+    },
+    {
+      movieTitle: "One Piece",
+      poster:
+        "https://th.bing.com/th/id/OIP.WFJ_ja7xHwNxhAgDPVuk6AHaDt?w=344&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+      episodeTitle: "tập 992",
+    },
+    {
+      movieTitle: "Ninh Anh Như Mộng",
+      poster:
+        "https://th.bing.com/th/id/OIP.Xo8yDYPZ8h69WQsH0fRBqQHaEp?w=284&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+      episodeTitle: "tập 1",
+    },
+  ];
+  const languages = ["Việt Nam", "English"];
   return (
     <>
       <div className={styles.headerContainer}>
@@ -71,75 +99,77 @@ function Header() {
           <Link to="/" className={`navbar-brand p-0 ${styles.brand}`}>
             <h2 className={styles.brand}>StarMovie</h2>
           </Link>
-          <div className={`text-light px-4 ${styles.left_header}`}>
-            <NavLink
-              to="/ABC"
-              className={`nav-item nav-link me-3 ${styles.nav_item}`}
-            >
-              Hoài Thủy Trúc Đình
-            </NavLink>
-            <NavLink
-              to="/"
-              className={`nav-item nav-link me-3 ${styles.nav_item}`}
-            >
-              Đề xuất
-            </NavLink>
-            <CategoryMenu
-              onHover={() => {
-                setIconUp(!iconUp);
-              }}
-              categories={categories}
-              className="me-3"
-            >
-              Khác{" "}
-              {iconUp ? (
-                <i className={`bi bi-caret-down-fill fs-6`}></i>
-              ) : (
-                <i className={`bi bi-caret-up-fill fs-6`}></i>
-              )}
-            </CategoryMenu>
-          </div>
-
-          {!user ? (
-            <Button
-              onClick={() => dispatch(openModal("showLoginSelectionModal"))}
-              className="btn btn-primary rounded-pill py-2 px-4"
-            >
-              Đăng Nhập
-            </Button>
-          ) : (
-            <Dropdown align="start" className="ms-lg-4">
-              <Dropdown.Toggle
-                id="dropdown-basic"
-                className="border-0 px-0 px-lg-2"
-                bsPrefix="custom-toggle"
-                style={{ background: "none" }}
+          <div className={styles.navContent}>
+            <div className={`text-light px-4 ${styles.left_header}`}>
+              <NavLink
+                to="/ABC"
+                className={`nav-item nav-link me-3 d-none d-xl-block ${styles.nav_item}`}
               >
-                <img
-                  src={user?.avatar || defaultAvatar}
-                  alt="User"
-                  className={styles.avatar}
-                  width={50}
-                  height={50}
-                />
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu className="m-0 mt-3">
-                <Dropdown.Item as={NavLink} to="/my-profile">
-                  Thông tin cá nhân
-                </Dropdown.Item>
-                {user.role !== "USER" && (
-                  <Dropdown.Item as={NavLink} to="/admin">
-                    Chuyển sang quản lý
-                  </Dropdown.Item>
-                )}
-                <Dropdown.Item as={NavLink} to="/settings">
-                  Cài đặt
-                </Dropdown.Item>
-                <Dropdown.Item onClick={handleLogout}>Đăng xuất</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          )}
+                Hoài Thủy Trúc Đình
+              </NavLink>
+              <NavLink
+                to="/"
+                className={`nav-item nav-link me-3 d-none d-xl-block ${styles.nav_item}`}
+              >
+                Đề xuất
+              </NavLink>
+              <CategoryMenu
+                onHover={() => {
+                  setIconUp(!iconUp);
+                }}
+                categories={categories}
+                className={`${styles.nav_item}`}
+              >
+                <NavLink className="d-none d-xl-block text-decoration-none text-light">
+                  Khác
+                  {iconUp ? (
+                    <i
+                      className={`bi bi-caret-down-fill`}
+                      style={{ fontSize: "10px", marginLeft: "2px" }}
+                    ></i>
+                  ) : (
+                    <i
+                      className={`bi bi-caret-up-fill`}
+                      style={{ fontSize: "10px", marginLeft: "2px" }}
+                    ></i>
+                  )}
+                </NavLink>
+              </CategoryMenu>
+              <CategoryMenu
+                width={debouncedWidth}
+                onHover={() => {
+                  setIconUp(!iconUp);
+                }}
+                categories={categories}
+                className={`${styles.nav_item} `}
+              >
+                <NavLink className="d-xl-none d-block  text-decoration-none text-light">
+                  Lướt xem
+                  {iconUp ? (
+                    <i
+                      className={`bi bi-caret-down-fill`}
+                      style={{ fontSize: "10px", marginLeft: "2px" }}
+                    ></i>
+                  ) : (
+                    <i
+                      className={`bi bi-caret-up-fill`}
+                      style={{ fontSize: "10px", marginLeft: "2px" }}
+                    ></i>
+                  )}
+                </NavLink>
+              </CategoryMenu>
+            </div>
+            <div className={`${styles.right_header}`}>
+              <Search />
+              <WatchHistoryNav
+                watchHistories={fakeWatchHistories}
+                hasUser={!!user}
+              />
+              <LanguageNav languages={languages} />
+              <AccountNav />
+              <VipNav />
+            </div>
+          </div>
         </div>
       </div>
       {/* Modal */}
