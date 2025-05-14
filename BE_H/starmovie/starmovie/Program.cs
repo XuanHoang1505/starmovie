@@ -84,20 +84,7 @@ builder.Services.AddAuthentication(options =>
 
 
 })
-.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
-.AddGoogle(googleOptions =>
-{
-    googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-    googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
-    googleOptions.CallbackPath = "/api/externalAuth/google-callback"; // URL callback
-    googleOptions.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme; // Sử dụng Cookie Authentication để lưu thông tin người dùng sau khi đăng nhập thành công
-})
-.AddFacebook(facebookOptions =>
-{
-    facebookOptions.AppId = builder.Configuration["Authentication:Facebook:AppId"];
-    facebookOptions.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"];
-    facebookOptions.CallbackPath = "/api/externalAuth/facebook-callback"; // URL callback
-});
+;
 builder.Services.AddAuthorization();
 
 builder.Services.AddAutoMapper(typeof(Program));
@@ -116,6 +103,7 @@ builder.Services.AddScoped<IVipRepository, VipRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
 builder.Services.AddScoped<IExternalAuthRepository, ExternalAuthRepository>();
+builder.Services.AddScoped<ISearchRepository, SearchRepository>();
 
 // Đăng ký CloudinaryService
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));

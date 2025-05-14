@@ -1,0 +1,123 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    background-color: #111;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    min-width: 280px;
+
+    &::before {
+        display: block;
+        box-sizing: border-box;
+        content: "";
+        z-index: -1;
+        height: 12px;
+        width: 12px;
+        position: absolute;
+        top: -2px;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(45deg);
+        background-color: rgb(26, 28, 34);
+        border-left: 1px solid rgba(255, 255, 255, 0.25);
+        border-top: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 4px 0px 0px;
+    }
+}
+.wrapper ul {
+    padding: 0;
+}
+.wrapper li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    line-height: 1.6;
+    font-size: 14px;
+    color: #a9a9ac;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.wrapper li i {
+    font-size: 18px;
+    font-weight: 500;
+    color: #c7c7c7;
+    transition: color 0.2s ease;
+}
+
+.wrapper li span {
+    flex: 1;
+    margin: 0 8px;
+    color: inherit;
+}
+
+.wrapper li:hover {
+    color: var(--primary);
+    background-color: #1c1e20;
+}
+
+.wrapper li:hover i {
+    color: var(--primary);
+}
+
+.nav_content{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+
+    .nav_title{
+        font-size: small;
+    }
+
+    &:hover{
+        color: var(--primary);
+    }
+}
+
+
+.text_suggest{
+    line-height: 18px;
+    font-size: 15px;
+    margin: 20px 10px;
+    color: rgb(169, 169, 172);
+}
+.btn_login{
+    background-color: #5EC45A !important;
+    color: white;
+    font-size: small;
+    padding: 5px 5px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+
+    &:hover{
+        background-color: #40df6a !important;
+    }
+}
+@media (min-width: 992px) {
+  .avatar_responsive {
+    width: 40px !important;
+    height: 40px !important;
+  }
+}
+.user_image{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 16px 6px 16px 16px;
+    margin-bottom: 10px;
+    background-size: 100%;
+    background-image: url(https://www.iqiyipic.com/lequ/20220210/cab31a17fdc5406c9d3f9e49ccedc8cb.jpg);
+    color: rgb(199, 199, 199);
+
+    &:hover{
+        background-image: url(https://www.iqiyipic.com/lequ/20220210/4464c3dbd7024f95964d2b9b0fa2fbcf.jpg);
+        color: var(--white);
+    }
+}
+
