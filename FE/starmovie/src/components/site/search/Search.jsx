@@ -10,7 +10,7 @@ import SearchItem from "../searchItem/SearchItem";
 import styles from "./Search.module.scss";
 import useDebounce from "../../../hooks/useDebounce";
 
-function Search() {
+function Search({ sizeWidth = `${230}px`, sizeHeight  }) {
   const [searchValue, setSearchValue] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [showResult, setShowResult] = useState(false);
@@ -55,8 +55,9 @@ function Search() {
   };
 
   return (
-    <div>
+    <div className="flex-grow-1">
       <HeadlessTippy
+        className="w-100"
         interactive
         visible={searchResult.length > 0 && showResult}
         render={(attrs) => (
@@ -73,7 +74,7 @@ function Search() {
         content="Tìm kiếm"
         placement="bottom"
       >
-        <div className={`${styles.search}`}>
+        <div className={`${styles.search}`} style={{ width: sizeWidth, height: sizeHeight }}>
           <input
             ref={inputRef}
             value={searchValue}

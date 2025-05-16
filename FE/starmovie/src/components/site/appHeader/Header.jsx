@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import Offcanvas from "react-bootstrap/Offcanvas";
+import Accordion from "react-bootstrap/Accordion";
 import { useSelector, useDispatch } from "react-redux";
 import { UserContext } from "../../../contexts/UserContext";
 import {
@@ -10,6 +12,8 @@ import {
 } from "../../../redux/slices/authModalSlice";
 
 import useDebounce from "../../../hooks/useDebounce";
+import defaultAvatar from "../../../assets/admin/images/avatars/user.png";
+import { logout } from "../../../services/site/AuthService";
 
 import Search from "../search/Search";
 import LoginSelectionModal from "../../../pages/site/auth/loginSelectionModal/LoginSelectionModal";
@@ -28,6 +32,11 @@ import AccountNav from "../accountNav/AccountNav";
 import VipNav from "../vipNav/VipNav";
 
 function Header() {
+  const [showMenu, setShowMenu] = useState(false);
+
+  const handleCloseMenu = () => setShowMenu(false);
+  const handleShowMenu = () => setShowMenu(true);
+
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const debouncedWidth = useDebounce(windowWidth, 100);
   const dispatch = useDispatch();
@@ -42,7 +51,7 @@ function Header() {
     otpInfo,
   } = useSelector((state) => state.authModal);
   const [iconUp, setIconUp] = useState(false);
-  const { user } = useContext(UserContext);
+  const { user, updateUser } = useContext(UserContext);
 
   useEffect(() => {
     if (!user) {
@@ -69,6 +78,10 @@ function Header() {
     dispatch(closeModal("showForgotPasswordModal"));
     dispatch(openModal("showVerifyOtpModal"));
   };
+  const handleLogout = async () => {
+    logout(user.userId);
+    updateUser(null);
+  };
   const categories = ["Phim Bộ", "Phim Hàn", "Phim Lẻ", "Hoạt hình"];
   const fakeWatchHistories = [
     {
@@ -93,14 +106,14 @@ function Header() {
   const languages = ["Việt Nam", "English"];
   return (
     <>
-      <div className={styles.headerContainer}>
+      <div className={`d-none d-md-block ${styles.headerContainer}`}>
         <div className={`navbar-expand-lg ${styles.navbar}`}>
           {/* <button className={`bg-transparent d-md-none `}><i className="bi bi-list fs-3 text-light"></i></button> */}
-          <Link to="/" className={`navbar-brand p-0 ${styles.brand}`}>
+          <Link to="/" className={`navbar-brand p-0 mb-1 ${styles.brand}`}>
             <h2 className={styles.brand}>StarMovie</h2>
           </Link>
           <div className={styles.navContent}>
-            <div className={`text-light px-4 ${styles.left_header}`}>
+            <div className={`text-light ms-1 ms-lg-4 ${styles.left_header}`}>
               <NavLink
                 to="/ABC"
                 className={`nav-item nav-link me-3 d-none d-xl-block ${styles.nav_item}`}
@@ -143,8 +156,12 @@ function Header() {
                 categories={categories}
                 className={`${styles.nav_item} `}
               >
-                <NavLink className="d-xl-none d-block  text-decoration-none text-light">
-                  Lướt xem
+                <NavLink
+                  className={
+                    "d-xl-none d-block  text-decoration-none text-light"
+                  }
+                >
+                  Thêm
                   {iconUp ? (
                     <i
                       className={`bi bi-caret-down-fill`}
@@ -170,6 +187,56 @@ function Header() {
               <VipNav />
             </div>
           </div>
+        </div>
+      </div>
+      <div className={`d-block d-md-none p-1 ${styles.mobile_header}`}>
+        <div
+          className={`d-flex justify-content-around align-items-center gap-2 mx-2 ${styles.mobile_header_content}`}
+        >
+          <i
+            className="bi bi-list fs-3 text-light"
+            onClick={handleShowMenu}
+          ></i>
+          <Link
+            to="/"
+            className={`navbar-brand mb-0 ${styles.brand}`}
+            style={{ color: "var(--primary)" }}
+          >
+            <h4 className={`${styles.brand} mb-0`}>StarMovie</h4>
+          </Link>
+          <Search sizeWidth={`${100}%`} sizeHeight={`${30}px`} />
+          <button
+            className="px-2 py-1 text-light d-flex align-items-center gap-1 small rounded-1"
+            style={{ backgroundColor: "var(--text-color)" }}
+          >
+            <i className="bi bi-box-arrow-down"></i>
+            APP
+          </button>
+        </div>
+        <div
+          className={`d-flex align-items-center gap-4 px-3 py-3 ${styles.mobile_header_nav}`}
+        >
+          <NavLink
+            to={"/hoaithuytrucdinh"}
+            className={`text-decoration-none fw-semibold text-nowrap ${styles.nav_mobile_item}`}
+          >
+            Hoài Thủy Trúc Đình
+          </NavLink>
+          <NavLink
+            to={`/`}
+            className={`text-decoration-none fw-semibold text-nowrap ${styles.nav_mobile_item}`}
+          >
+            Đề xuất
+          </NavLink>
+          {categories.map((item, index) => (
+            <NavLink
+              to={`/${item}`}
+              key={index}
+              className={`text-decoration-none fw-semibold text-nowrap ${styles.nav_mobile_item}`}
+            >
+              {item}
+            </NavLink>
+          ))}
         </div>
       </div>
       {/* Modal */}
@@ -273,6 +340,220 @@ function Header() {
           dispatch(openModal("showLoginModal"));
         }}
       />
+      <Offcanvas
+        show={showMenu}
+        onHide={handleCloseMenu}
+        style={{ width: "270px" }}
+        className="d-block d-md-none"
+      >
+        <Offcanvas.Header className="p-0">
+          {user ? (
+            <div className={`${styles.user_image} d-flex align-items-center`}>
+              <img
+                src={user.avatar || defaultAvatar}
+                alt="avatar"
+                className="object-fit-cover rounded-circle border border-1 border-secondary-subtle"
+                style={{
+                  minWidth: "45px",
+                  maxHeight: "45px",
+                  marginRight: "15px",
+                }}
+              />
+              <p className="m-0 text-truncate flex-grow-1">{user.fullName}</p>
+            </div>
+          ) : (
+            <div
+              className={`${styles.user_image} d-flex align-items-center`}
+              onClick={() => {
+                setShowMenu(false);
+                dispatch(openModal("showLoginSelectionModal"));
+              }}
+            >
+              <img
+                src={defaultAvatar}
+                alt="avatar"
+                className="object-fit-cover rounded-circle border border-1 border-secondary-subtle"
+                style={{
+                  minWidth: "45px",
+                  maxHeight: "45px",
+                  marginRight: "15px",
+                }}
+              />
+              <p className="m-0 text-truncate flex-grow-1">
+                Đăng nhập / Đăng ký
+              </p>
+            </div>
+          )}
+        </Offcanvas.Header>
+        <Offcanvas.Body className={`${styles.offcanvas_body}`}>
+          <div className="d-flex flex-column gap-2">
+            <button className={`mb-1 ${styles.vip_button}`}>
+              {" "}
+              Gia nhập VIP
+            </button>
+            <NavLink
+              to={"/account"}
+              className={`${styles.nav_item_sideBar} w-100 text-light text-decoration-none py-2`}
+            >
+              Cài đặt cá nhân
+            </NavLink>
+            <NavLink
+              to={"/"}
+              className={`${styles.nav_item_sideBar} w-100 text-light text-decoration-none py-2`}
+            >
+              Tiếng Việt
+            </NavLink>
+            <hr className="my-2 border-secondary" />
+            <NavLink
+              to={"/watch-history"}
+              className={`${styles.nav_item_sideBar} w-100 text-light text-decoration-none pb-2`}
+            >
+              Lịch sử xem
+            </NavLink>
+            <NavLink
+              to={"/favorite"}
+              className={`${styles.nav_item_sideBar} w-100 text-light text-decoration-none py-2`}
+            >
+              Yêu thích của tôi
+            </NavLink>
+            <NavLink
+              to={"/sub-title"}
+              className={`${styles.nav_item_sideBar} w-100 text-light text-decoration-none py-2`}
+            >
+              Bản dịch phụ đề
+            </NavLink>
+            <NavLink
+              to={"/review"}
+              className={`${styles.nav_item_sideBar} w-100 text-light text-decoration-none py-2`}
+            >
+              Đánh giá của tôi
+            </NavLink>
+            <hr className="my-2 border-secondary" />
+            <Accordion>
+              <Accordion.Item
+                eventKey="0"
+                style={{ backgroundColor: "transparent" }}
+              >
+                <Accordion.Header>Giới thiệu về chúng tôi</Accordion.Header>
+                <Accordion.Body className="p border-0">
+                  <div className="d-flex flex-column gap-2">
+                    <NavLink
+                      to={"/review"}
+                      className={`${styles.nav_item_sideBar} w-100 text-light text-decoration-none py-2`}
+                    >
+                      Thông tin công ty
+                    </NavLink>
+                    <NavLink
+                      to={"/review"}
+                      className={`${styles.nav_item_sideBar} w-100 text-light text-decoration-none py-2`}
+                    >
+                      Giới thiệu dịch vụ
+                    </NavLink>
+                    <NavLink
+                      to={"/review"}
+                      className={`${styles.nav_item_sideBar} w-100 text-light text-decoration-none py-2`}
+                    >
+                      Cách xem
+                    </NavLink>
+                    <NavLink
+                      to={"/review"}
+                      className={`${styles.nav_item_sideBar} w-100 text-light text-decoration-none py-2`}
+                    >
+                      Quan hệ nhà đầu tư
+                    </NavLink>
+                  </div>
+                </Accordion.Body>
+              </Accordion.Item>
+              <Accordion.Item
+                eventKey="1"
+                style={{ backgroundColor: "transparent" }}
+              >
+                <Accordion.Header>Hợp tác</Accordion.Header>
+                <Accordion.Body>
+                  <div className="d-flex flex-column gap-2">
+                    <NavLink
+                      to={"/review"}
+                      className={`${styles.nav_item_sideBar} w-100 text-light text-decoration-none py-2`}
+                    >
+                      Đăng quảng cáo
+                    </NavLink>
+                    <NavLink
+                      to={"/review"}
+                      className={`${styles.nav_item_sideBar} w-100 text-light text-decoration-none py-2`}
+                    >
+                      Quan hệ kinh doanh
+                    </NavLink>
+                    <NavLink
+                      to={"/review"}
+                      className={`${styles.nav_item_sideBar} w-100 text-light text-decoration-none py-2`}
+                    >
+                      Hợp tác cài đặt trước
+                    </NavLink>
+                  </div>
+                </Accordion.Body>
+              </Accordion.Item>
+              <Accordion.Item
+                eventKey="2"
+                style={{ backgroundColor: "transparent" }}
+              >
+                <Accordion.Header>Hỗ trợ và giúp đỡ</Accordion.Header>
+                <Accordion.Body>
+                  <div className="d-flex flex-column gap-2">
+                    <NavLink
+                      to={"/review"}
+                      className={`${styles.nav_item_sideBar} w-100 text-light text-decoration-none py-2`}
+                    >
+                      Phản ánh ý kiến
+                    </NavLink>
+                    <NavLink
+                      to={"/review"}
+                      className={`${styles.nav_item_sideBar} w-100 text-light text-decoration-none py-2`}
+                    >
+                      Trung tâm phản hồi bảo mật
+                    </NavLink>
+                    <NavLink
+                      to={"/review"}
+                      className={`${styles.nav_item_sideBar} w-100 text-light text-decoration-none py-2`}
+                    >
+                      Câu hỏi thường gặp
+                    </NavLink>
+                  </div>
+                </Accordion.Body>
+              </Accordion.Item>
+              <Accordion.Item
+                eventKey="3"
+                style={{ backgroundColor: "transparent" }}
+              >
+                <Accordion.Header>Điều khoản dịch vụ</Accordion.Header>
+                <Accordion.Body>
+                  <div className="d-flex flex-column gap-2">
+                    <NavLink
+                      to={"/review"}
+                      className={`${styles.nav_item_sideBar} w-100 text-light text-decoration-none py-2`}
+                    >
+                      Điều khoản dịch vụ
+                    </NavLink>
+                    <NavLink
+                      to={"/review"}
+                      className={`${styles.nav_item_sideBar} w-100 text-light text-decoration-none py-2`}
+                    >
+                      Điều khoản sử dụng
+                    </NavLink>
+                  </div>
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
+            {user && (
+              <button
+                className={`my-2 ${styles.logout_button}`}
+                onClick={handleLogout}
+              >
+                Đăng xuất
+              </button>
+            )}
+          </div>
+        </Offcanvas.Body>
+      </Offcanvas>
     </>
   );
 }
