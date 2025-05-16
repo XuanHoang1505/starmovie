@@ -2,9 +2,10 @@
 .search_result {
     width: 230px;
 }
-
+.search_mobile {
+    width: 100%;
+}
 .search {
-    width: 230px;
     position: relative;
     display: flex;
     height: 36px;
@@ -14,6 +15,7 @@
     box-shadow: none;
 
     input {
+        width: 100%;
         padding-right: 40px;
         font-family: var(--font-family);
         padding-left: 16px;
@@ -40,10 +42,10 @@
     &::after {
         content: '';
         position: absolute;
-        top: 6px; 
+        top: 5px; 
+        bottom: 5px;
         right: 40px; 
         width: 1px;
-        height: 24px;
         background-color: rgba(255, 255, 255, 0.3);
       }
 
@@ -56,6 +58,14 @@
     .search {
         // width: 60%;
         max-width: 190px;
+    }
+    
+}
+
+@media (max-width: 767.60px) {
+    .search {
+        // width: 60%;
+        max-width: 100%;
     }
     
 }
